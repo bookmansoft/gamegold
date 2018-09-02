@@ -1,0 +1,204 @@
+#!/usr/bin/env node
+
+'use strict';
+
+require('./gamegold');
+
+/**
+ * 控制台应用，同时也也作为RPC客户端使用
+ */
+class CLI
+{
+  /**
+   * 构造函数
+   */
+  constructor() {
+    this.config = new gamegold.config('gamegold');
+    this.config.load({
+      argv: true,
+      env: true
+    });
+    this.config.open('gamegold.conf');
+  
+    this.argv = this.config.argv;
+
+    //通讯客户端组件，用于访问远程服务器
+    this.connector = new gamegold.accessWallet({
+      rpcHost: this.config.str('http-remote-host'),
+      apiKey: this.config.str('api-key'),
+      network: this.config.str('network'),
+      id: this.config.str('wallet-id', 'primary'),
+      cid: '2c9af1d0-7aa3-11e8-8095-3d21d8a3bdc9', //授权节点编号，用于访问远程钱包时的认证
+      token: '03f6682764acd7e015fe4e8083bdb2b969eae0d6243f810a370b23ad3863c2efcd', //授权节点令牌固定量，用于访问远程钱包时的认证
+    });
+    //@note 钱包作为插件运行时端口号为17332，作为节点时端口号为17334
+
+    /**
+     * 命令行关键字对应函数映射表
+     */
+    this.nodeFunc = {
+      'wallet.create': this.mkwallet,
+      'wallet.select': this.selectwallet,
+      'rpc': this.rpc,
+      'listen': this.listen,
+      'default': async function(){
+        this.log('Commands:');
+        this.log('  $ wallet.create [args]: create new wallet.');
+        this.log('  $ wallet.select id: select a wallet and use it.');
+        this.log('  $ rpc [command] [args]: Execute RPC command.');
+        this.log('  $ listen: Listen for events.');
+        this.log('Other Options:');
+        this.log('  --passphrase [passphrase]: For signing & account creation.');
+        this.log('  --account [account-name]: Account name.');
+      }
+    };  
+  }
+
+  /**
+   * 日志打印
+   */
+  log(json) {
+    if (typeof json === 'string') {
+      return console.log.apply(console, arguments);
+    }
+    return console.log(JSON.stringify(json, null, 2));
+  };
+  
+  /**
+   * 销毁客户端组件
+   */
+  destroy() {
+    if (this.connector)
+      this.connector.destroy();
+  
+    return Promise.resolve();
+  };
+
+  /**
+   * 解析控制台输入，发起相应调用
+   */
+  async open() {
+    let cmd = this.argv.shift();
+    if(!!this.nodeFunc[cmd]){
+      await this.nodeFunc[cmd].apply(this);
+    }
+    else{
+      await this.nodeFunc['default'].apply(this);
+    }
+  };
+
+  /**
+   * 创建钱包的入口函数
+   */
+  async mkwallet() {
+    let options = {}; 
+    options.id = this.config.str(0);        //Wallet ID (used for storage)
+    options.type = 'pubkeyhash';            //Type of wallet (pubkeyhash, multisig) (default=pubkeyhash).
+    options.m = 0;                          //`m` value for multisig.
+    options.n = 0;                          //`n` value for multisig.
+    options.mnemonic = null;                //mnemonic phrase to use to instantiate an hd private key for wallet
+    options.passphrase = null;              //passphrase to encrypt wallet
+    options.master = null;                  //Master HD key. If not present, it will be generated.
+    options.witness = true;                 //Whether to use witness programs.
+    options.watch = false;                  //set true to create a watch-only wallet
+    options.key = null;                     //public key used for multisig wallet
+
+    let wallet = await this.connector.create(options);
+    this.connector.client.id = wallet.id;
+    this.log(wallet);
+  }
+
+  /**
+   * 选取钱包的入口函数
+   */
+  async selectwallet() {
+    //发起远程调用
+    let wallet = await this.connector.execute('wallet.select', [this.config.str([0, 'id'])]);
+    //根据返回，设置新的当前钱包编号
+    this.connector.client.id = wallet.id;
+    this.log(wallet);
+  }
+
+  async listen(){
+    await this.connector.open();
+  
+    this.connector.on('tx', (details) => {
+      this.log('TX:');
+      this.log(details);
+    });
+  
+    this.connector.on('confirmed', (details) => {
+      this.log('TX confirmed:');
+      this.log(details);
+    });
+  
+    this.connector.on('unconfirmed', (details) => {
+      this.log('TX unconfirmed:');
+      this.log(details);
+    });
+  
+    this.connector.on('conflict', (details) => {
+      this.log('TX conflict:');
+      this.log(details);
+    });
+  
+    //开启监听模式后，收到 'address' 事件的时序：
+    //1、钱包节点监控到主链上相应的变化后，向客户端下发 'wallet address' 事件
+    //2、ws client 收到服务端下发的 'wallet address' 事件后抛出 'address' 事件
+    //3、connector 中继抛出 'address' 事件
+    //4、此处捕获到 connector 抛出的 'address' 事件
+    this.connector.on('address', (receive) => {
+      this.log('New addresses allocated:');
+      this.log(receive);
+    });
+  
+    this.connector.on('balance', (balance) => {
+      this.log('Balance:');
+      this.log(balance);
+    });
+  
+    return await this.connector.onDisconnect();
+  }
+  
+  /**
+   * RPC调用的入口函数
+   */
+  async rpc(){
+    const method = this.argv.shift();
+    const params = [];
+  
+    for (const arg of this.argv) {
+      let param;
+      try {
+        param = JSON.parse(arg);
+      } catch (e) {
+        param = String(arg);
+      }
+      params.push(param);
+    }
+  
+    let result;
+    try {
+      result = await this.connector.execute(method, params);
+    } 
+    catch (e) {
+      if (e.type === 'RPCError') {
+        this.log(e.message);
+        return;
+      }
+      throw e;
+    }
+  
+    this.log(result);
+  }  
+}
+
+(async () => {
+  const cli = new CLI();
+  await cli.open();
+  await cli.destroy();
+  process.exit(0);
+})().catch((err) => {
+  console.error(err.stack);
+  process.exit(1);
+});
