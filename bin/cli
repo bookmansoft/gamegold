@@ -2,7 +2,11 @@
 
 'use strict';
 
-require('./gamegold');
+const gamegold = require('../lib/gamegold');
+
+// 由于本示例项目是从 lib 目录下引用 gamegold，而不像普通项目将 gamegold 和其他依赖包一同安装于 node_modules 之下
+// 因此需要做一下地址转换，避免部分使用绝对地址的二进制包无法引用
+gamegold.setRelative(path.join(__dirname, '../', 'node_modules'));
 
 /**
  * 控制台应用，同时也也作为RPC客户端使用

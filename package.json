@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "description": "Game Gold Project",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -8,9 +8,9 @@
   "bugs": {
     "url": "https://github.com/bookmansoft/gamegold/issues"
   },
-  "author": "bookman <ceo@920.cc>",
+  "author": "bookmansoft <ceo@920.cc>",
   "contributors": [
-    "bookman <ceo@920.cc>"
+    "bookmansoft <ceo@920.cc>"
   ],
   "keywords": [
     "gamegold",
@@ -69,7 +69,7 @@
   },
   "main": "./gamegold.js",
   "scripts": {
-    "start": "node index --network=testnet",
-    "cli": "node cli --network=testnet"
+    "start": "node bin/node --network=testnet",
+    "cli": "node bin/cli --network=testnet"
   }
 }
