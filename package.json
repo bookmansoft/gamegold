@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Game Gold Project",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -36,7 +36,6 @@
     "express": "^4.16.3",
     "level-js": "^2.2.4",
     "leveldown": "^4.0.1",
-    "levelup": "^3.0.1",
     "lodash": "^4.17.10",
     "n64": "0.0.18",
     "request": "^2.87.0",
