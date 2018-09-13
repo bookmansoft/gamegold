@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Game Gold Project",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -46,7 +46,7 @@
   },
   "optionalDependencies": {
     "secp256k1": "^3.3.0",
-    "socket.io-client": "2.0.3"
+    "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
