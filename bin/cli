@@ -1,6 +1,7 @@
-#!/usr/bin/env node
+#!/usr/bin/env cli
 
 'use strict';
+const path = require('path');
 
 const gamegold = require('../lib/gamegold');
 
