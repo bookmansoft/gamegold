@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=11' />
+    <title>Docbox</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href='css/base.css' rel='stylesheet' />
+    <link href='css/style.css' rel='stylesheet' />
+    <link href='css/railscasts.css' rel='stylesheet' />
+  </head>
+  <body>
+    <!--START--><div id='app'><div class="container unlimiter" data-reactroot="" data-reactid="1" data-react-checksum="-194145802"><div class="fixed-top fixed-right space-left16" data-reactid="2"><div class="fill-light col6 pin-right" data-reactid="3"></div></div><div class="space-top5 scroll-styled overflow-auto pad1 width16 sidebar fixed-left fill-dark dark" data-reactid="4"><div class="pad0x small" data-reactid="5"><div class="small pad0x quiet space-top1" data-reactid="6">简介</div><a href="#游戏金api文档" class="line-height15 pad0x pad00y quiet block " data-reactid="7">游戏金API文档</a><div class="small pad0x quiet space-top1" data-reactid="8">连接器</div><a href="#连接器列表" class="line-height15 pad0x pad00y quiet block " data-reactid="9">连接器列表</a><div class="small pad0x quiet space-top1" data-reactid="10">认证和授权</div><a href="#gip0005-认证和授权" class="line-height15 pad0x pad00y quiet block " data-reactid="11">GIP0005 认证和授权</a><div class="small pad0x quiet space-top1" data-reactid="12">支付协议</div><a href="#gip0006-支付协议" class="line-height15 pad0x pad00y quiet block " data-reactid="13">GIP0006 支付协议</a><div class="small pad0x quiet space-top1" data-reactid="14">道具空投协议</div><a href="#gip0009-游戏道具的空投" class="line-height15 pad0x pad00y quiet block " data-reactid="15">GIP0009 游戏道具的空投</a><div class="small pad0x quiet space-top1" data-reactid="16">区块链浏览器 - 区块</div><a href="#和区块数据相关的接口" class="line-height15 pad0x pad00y quiet block " data-reactid="17">和区块数据相关的接口</a><div class="small pad0x quiet space-top1" data-reactid="18">区块链浏览器 - 地址</div><a href="#和地址相关的接口" class="line-height15 pad0x pad00y quiet block " data-reactid="19">和地址相关的接口</a><div class="small pad0x quiet space-top1" data-reactid="20">区块链浏览器 - 交易</div><a href="#和交易相关的接口" class="line-height15 pad0x pad00y quiet block " data-reactid="21">和交易相关的接口</a><div class="small pad0x quiet space-top1" data-reactid="22">区块链浏览器 - 辅助</div><a href="#系统状态查询类接口" class="line-height15 pad0x pad00y quiet block " data-reactid="23">系统状态查询类接口</a></div></div><div class="space-left16" data-reactid="24"><div class="" data-reactid="25"><div class="clearfix" data-reactid="26"><div data-title="游戏金API文档" class="keyline-top section contain clearfix " data-reactid="27"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="28"><h2 id="游戏金api文档">游戏金API文档</h2>
+<p>欢迎来到游戏金公链API文档站！</p>
+<p>本站文档采用Markdown格式书写，并通过<a href="https://github.com/tmcw/docbox">docbox</a>转化而来
+支持 <strong>bold</strong>, <em>emphasis</em>, <del>strikethrough</del> <code>code</code> 等Markdown格式.</p>
+</div></div><div data-title="连接器列表" class="keyline-top section contain clearfix " data-reactid="29"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="30"><h2 id="连接器列表">连接器列表</h2>
+<p>连接器是指协助业务点执行连接公链、发起业务请求并获取应答的流程的辅助类，目前有如下不同类型的连接器</p>
+<ul>
+<li>开放式连接器</li>
+<li>授权式连接器</li>
+<li>控制台连接器</li>
+</ul>
+</div></div><div data-title="开放式连接器" class="keyline-top section contain clearfix " data-reactid="31"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="32"><h3 id="开放式连接器">开放式连接器</h3>
+<p>用于基于浏览器的应用，在未经全节点授权的情况下，访问部分脱敏API
+开放式连接器采用 Restful 语法，通过 GET 或 POST 访问API并获得JSON格式的应答
+开放式连接器受流量控制影响，每分钟最多100次访问</p>
+<p>可以使用 curl 或者 Postman 等工具进行API调用测试。GET API可直接用浏览器调用， POST API可以通过浏览器插件调用</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="33"><h4 id="example-request">Example request</h4>
+<div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/block/height/:height</div>
+    </div>
+<pre class='hljs'>curl http://localhost:17332/public/block/height/:height</pre>
+<div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>POST</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/block/height/:height</div>
+    </div>
+<pre class='hljs'>curl -X POST http://localhost:17332/public/block/height/{height}</pre>
+<h4 id="example-response">Example response</h4>
+<pre class='hljs'>{
+  <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"14f73dfc67b3dc7939de6514b6ce230934a5b42cbeadf44038ed276c6390cdab"</span>,
+  <span class="hljs-attr">"confirmations"</span>: <span class="hljs-number">3213</span>,
+  <span class="hljs-attr">"strippedsize"</span>: <span class="hljs-number">651</span>,
+  <span class="hljs-attr">"size"</span>: <span class="hljs-number">687</span>,
+  <span class="hljs-attr">"weight"</span>: <span class="hljs-number">2640</span>,
+  <span class="hljs-attr">"height"</span>: <span class="hljs-number">100</span>,
+  <span class="hljs-attr">"version"</span>: <span class="hljs-number">536870912</span>,
+  <span class="hljs-attr">"versionHex"</span>: <span class="hljs-string">"20000000"</span>,
+  <span class="hljs-attr">"merkleroot"</span>: <span class="hljs-string">"059729c129799cf09ec07f2cf596149d59a5986251cb1143768f54de5ee30579"</span>,
+  <span class="hljs-attr">"coinbase"</span>: <span class="hljs-string">"0164116d696e65642062792067616d65676f6c6404c2a3b0f5080000000000000000"</span>,
+  <span class="hljs-attr">"tx"</span>: [
+    <span class="hljs-string">"059729c129799cf09ec07f2cf596149d59a5986251cb1143768f54de5ee30579"</span>
+  ],
+  <span class="hljs-attr">"time"</span>: <span class="hljs-number">1532999312</span>,
+  <span class="hljs-attr">"mediantime"</span>: <span class="hljs-number">1532996312</span>,
+  <span class="hljs-attr">"bits"</span>: <span class="hljs-number">545259519</span>,
+  <span class="hljs-attr">"difficulty"</span>: <span class="hljs-number">4.6565423739069247e-10</span>,
+  <span class="hljs-attr">"chainwork"</span>: <span class="hljs-string">"00000000000000000000000000000000000000000000000000000000000000ca"</span>,
+  <span class="hljs-attr">"previousblockhash"</span>: <span class="hljs-string">"35f512ff035b788976714b2cbc925d990968fe1621fb40c917544dfd1b9bf33c"</span>,
+  <span class="hljs-attr">"nextblockhash"</span>: <span class="hljs-string">"47b85cea3ba29563171cb3d6a0e4f5c24d4e76d84e8fb2d9b4417258ffbb9744"</span>
+}</pre>
+</div></div><div data-title="授权式连接器" class="keyline-top section contain clearfix " data-reactid="34"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="35"><h3 id="授权式连接器">授权式连接器</h3>
+<p>用于基于浏览器的游戏客户端，或没有集成核心库的游戏服务端，向SPV节点/全节点发起API调用
+授权式连接器受流量控制影响，每分钟最多1000次访问
+详细案例请查阅 gamegoldmanager 项目中的 remoting 对象封装</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="36"><h4 id="example-request-1">Example request</h4>
+</div></div><div data-title="控制台连接器" class="keyline-top section contain clearfix " data-reactid="37"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="38"><h3 id="控制台连接器">控制台连接器</h3>
+<p>用于集成了核心库（GameGold Core）的控制台或游戏服务端，向SPV节点/全节点发起API调用
+本连接器使用了核心库提供的 accessWallet 类</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="39"><h4 id="example-request-2">Example request</h4>
+</div></div><div data-title="GIP0005 认证和授权" class="keyline-top section contain clearfix " data-reactid="40"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="41"><h2 id="gip0005-认证和授权">GIP0005 认证和授权</h2>
+<p>GIP0005 定义了玩家如何利用自己的钱包，向游戏传递互信的协议和流程，包括：
+1、认证：玩家钱包向游戏签发证书，游戏可以离线验证该证书，并获得玩家的可信信息
+2、授权：游戏根据证书信息，将链上资产和游戏内资产进行同步，之后玩家就可以在游戏内支配已确权的资产</p>
+</div></div><div data-title="token.user" class="keyline-top section contain clearfix " data-reactid="42"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="43"><h3 id="tokenuser">token.user</h3>
+<p>游戏客户端向钱包申领指定用户的登录令牌: 输入游戏编号和玩家编号，输出令牌对象。</p>
+<ul>
+<li>开放式连接器 N - 授权式连接器 Y - 控制台连接器 Y -</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>game_id</code></td>
+<td>游戏编号</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td>游戏内玩家编号</td>
+</tr>
+</tbody>
+</table>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="44"><h4 id="可访问性">可访问性</h4>
+<h4 id="example-request-3">Example request</h4>
+<h4 id="example-request-body">Example request body</h4>
+<pre class='hljs'>[
+  <span class="hljs-string">"{game_id}"</span>,
+  <span class="hljs-string">"{user_id}"</span>
+]</pre>
+<h4 id="example-response-1">Example response</h4>
+<pre class='hljs'>{
+  <span class="hljs-attr">"data"</span>: {
+    <span class="hljs-attr">"cid"</span>: <span class="hljs-string">"{game_id}"</span>,
+    <span class="hljs-attr">"uid"</span>: <span class="hljs-string">"{user_id}"</span>,
+    <span class="hljs-attr">"time"</span>: <span class="hljs-string">"{timestamp}"</span>,
+    <span class="hljs-attr">"addr"</span>: <span class="hljs-string">"{user_address}"</span>,
+    <span class="hljs-attr">"pubkey"</span>: <span class="hljs-string">"{user_pubkey}"</span>
+  },
+  <span class="hljs-attr">"sig"</span>: <span class="hljs-string">"{token_sig}"</span>
+}</pre>
+</div></div><div data-title="queryProps" class="keyline-top section contain clearfix " data-reactid="45"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="46"><h3 id="queryprops">queryProps</h3>
+<p>游戏向核心网发送游戏编码、玩家地址，向对等网络查询该玩家持有的道具列表。</p>
+<ul>
+<li>开放式连接器 Y - 授权式连接器 Y - 控制台连接器 Y -</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>game_id</code></td>
+<td>游戏编号</td>
+</tr>
+<tr>
+<td><code>user_addr</code></td>
+<td>游戏内玩家的有效地址</td>
+</tr>
+</tbody>
+</table>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="47"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>POST</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/prop/query/{game_id,</div>
+    </div>
+<h4 id="可访问性-1">可访问性</h4>
+<h4 id="example-request-4">Example request</h4>
+<h4 id="example-request-body-1">Example request body</h4>
+<pre class='hljs'>[
+  <span class="hljs-string">"{game_id}"</span>,
+  <span class="hljs-string">"{user_addr}"</span>
+]</pre>
+<h4 id="example-response-2">Example response</h4>
+<pre class='hljs'>[
+  {
+    <span class="hljs-attr">"pid"</span>: <span class="hljs-string">"{道具编号}"</span>,
+    <span class="hljs-attr">"cid"</span>: <span class="hljs-string">"{游戏编号}"</span>,
+    <span class="hljs-attr">"oid"</span>: <span class="hljs-string">"{道具原始编号}"</span>,
+    <span class="hljs-attr">"oper"</span>: <span class="hljs-string">"exchange"</span>,
+    <span class="hljs-attr">"prev"</span>: {
+      <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"{转入交易的哈希}"</span>,
+      <span class="hljs-attr">"index"</span>: <span class="hljs-string">"{关联的输出索引}"</span>
+    },
+    <span class="hljs-attr">"current"</span>: {
+      <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"{道具所在交易的哈希}"</span>,
+      <span class="hljs-attr">"index"</span>: <span class="hljs-string">"{关联的输出索引}"</span>
+    },
+    <span class="hljs-attr">"gold"</span>: <span class="hljs-string">"{含金量}"</span>,
+    <span class="hljs-attr">"confirm"</span>: <span class="hljs-string">"{确认数}"</span>,
+    <span class="hljs-attr">"root"</span>: {
+      <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"{道具首发交易的哈希}"</span>,
+      <span class="hljs-attr">"index"</span>: <span class="hljs-string">"{关联的输出索引}"</span>
+    }
+  }
+]</pre>
+</div></div><div data-title="GIP0006 支付协议" class="keyline-top section contain clearfix " data-reactid="48"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="49"><h2 id="gip0006-支付协议">GIP0006 支付协议</h2>
+</div></div><div data-title="协议说明" class="keyline-top section contain clearfix " data-reactid="50"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="51"><h3 id="协议说明">协议说明</h3>
+<p>Layer: Consensus</p>
+<p>Title: Payment Protocol</p>
+<p>Status: Draft V0.1</p>
+<p>Author：bookman</p>
+<p>Type: Standards Track</p>
+<p>Created: 2018-06-19</p>
+<p>Summary：为游戏玩家提供安全便捷的支付结算通道</p>
+<p><strong>业务主体描述</strong></p>
+<p>1、玩家
+玩家在游戏提供的交互页面上选取商品并生成订单，使用自己的钱包支付订单，在订单在线兑付后确认订单流程完成</p>
+<p>2、钱包
+玩家从钱包跳转到游戏，在这个跳转过程中，送去了登录令牌，如果通过了验证，就可以顺利登录游戏
+玩家登录后，可以浏览到自己已有的道具（登录地址上的所有该游戏的道具）
+玩家在游戏商城里点选商品后，将形成一个订单，点击"支付"，跳回钱包
+玩家在钱包内签署该订单的支付交易，订单被网络确认后开始广播，玩家的钱包将会收到交易确认消息
+玩家可以在钱包中，通过检索相关订单记录，来查看相关订单支付详情
+玩家回到游戏中，再次点击"查看订单列表"，可以看到订单状态发生了变化，同时订单也执行了兑付</p>
+<p>3、游戏
+游戏负责提供商品列表、购物车以帮助玩家生成订单，并提供最终的订单在线兑付功能
+开放订单确认回调接口，以接收特约全节点发送的订单状态通告
+对已受理订单，定期向特约全节点查询其确认数，当达到预设阀值（例如6个）时触发兑付流程</p>
+<p>4、特约全节点
+因为特约全节点是游戏自行建立的全节点，所以游戏得以获得充分的授权。
+特约全节点为游戏提供订单在线兑付功能（链上道具的制备和转移），注意订单中的普通商品的兑付由游戏自行完成
+特约全节点还为游戏提供交易确认通知、订单存档和历史查询等功能
+特约全节点可以提供对等网络的一般性功能，也能面向游戏提供特约服务功能</p>
+<p>5、对等网络
+对等网络为各类合法交易提供中继广播、打包功能。</p>
+<p><strong>时序图</strong></p>
+<pre><code>    玩家             钱包             游戏          特约全节点           对等网络
+      |               |                |                 |                  |  
+      |  make order   |                |                 |                  |  
+      |———————————————+———————————————>|                 |                  |  
+      |               |   send order   |                 |                  |
+      |               |&#x3C;———————————————|                 |                  |
+      |               |   pay  order   |                 |                  |
+      |               |————————————————+—————————————————+—————————————————>|
+      |               |                |                 |   confirm tx     |
+      |               |                |                 |&#x3C;—————————————————|
+      |               |                |  confirm order  |                  |
+      |               |                |&#x3C;————————————————|                  |
+      |               |                | implement order |                  |
+      |               |                |————————————————>|                  |
+      |               |                |                 |   send prop      |
+      |               |                |                 |—————————————————>|
+      |               |                |                 |   confirm tx     |
+      |               |                |                 |&#x3C;—————————————————|
+      |               |                | confirm prop    |                  |
+      |               |                |&#x3C;————————————————|                  |
+      |               |  provide prop  |                 |                  |  
+      |&#x3C;——————————————+————————————————|                 |                  |  
+      |               |                |   query order   |                  |
+      |               |                |&#x3C;———————————————>|                  |
+      |               |                |                 |                  |  
+      |               |                |                 |                  |  
+</code></pre>
+<ul>
+<li>√ make order          ：玩家在商城选购商品形成订单</li>
+<li>√ send order          ：游戏将订单转发给钱包</li>
+<li>√ pay order           ：钱包收到游戏转入的订单（或玩家手动输入的订单），签发订单支付交易并广播至对等网络</li>
+<li>√ confirm tx          ：特约全节点收到对等网络交易确认通知
+池传导通知：调用游戏的订单确认回调接口，通告订单已收到
+链传导通知：
+1、将交易信息记录到 layout.o 条目下
+2、调用游戏的订单确认回调接口，通告订单已确认，附加确认次数</li>
+<li>√ confirm order       ：特约全节点通知游戏订单已确认</li>
+<li>√ implement order     ：游戏收到订单确认回调请求，分情况刷新订单状态，例如"已收到，处理中。。。"、"已确认，确认数N"等等
+1、如果是内部商品，直接兑付
+2、如果是上链商品，必须向特约全节点申请订单兑付，以完成道具制备（ prop.send ）和转移（ prop.send ）等操作</li>
+<li>√ send prop           ：特约全节点接受了游戏的订单兑付请求，签发道具制备转移交易并广播至对等网络</li>
+<li>√ confirm tx          ：特约全节点收到对等网络交易确认通知</li>
+<li>√ confirm prop        ：特约全节点通知游戏道具已确认</li>
+<li>√ provide prop        ：游戏向玩家核发道具（去重处理）</li>
+<li>√ query order         ：游戏向特约全节点核查待处理订单实时状态：指定游戏编号、订单流水号集合，查询对应订单详情</li>
+</ul>
+<p><strong>订单状态图</strong></p>
+<pre><code>        _____支付_____确认________履行____
+      |           ↓         ↓           ↓
+    订单生成      已支付     已确认      已履行       已过期
+      |           ↓         ↓           ↓           ↑
+      |       进入内存池    上链     兑付订单内容     |
+      |_____________________________________________|
+</code></pre>
+<p><strong>认证和通讯安全</strong></p>
+<ul>
+<li>游戏APP和服务端通讯安全自行负责</li>
+<li>玩家钱包和对等网络间依托现有的P2P通讯方式</li>
+<li>玩家钱包登录游戏APP：送去登录令牌，令牌中包含用户私钥签署过的数据</li>
+<li>游戏服务端访问对等网络：对于脱敏操作，可以直接明文通讯，如果出于对DDOS的担心，可以考虑一些流量控制方案</li>
+<li>游戏服务端和特约全节点（远程钱包）之间采用 HMAC 签名算法，确保两者相互认证和通讯数据不可篡改
+一、游戏服务端访问特约全节点（远程钱包）
+1、远程钱包必须为游戏服务端分配令牌编号和令牌固定量，可以通过本地制备指令 token.auth 屏显制备内容
+2、每个游戏服务端配置被分配的令牌编号和令牌固定量，并以离线手动更新方式，和远程钱包的配置保持一致
+3、游戏服务端使用远程钱包RPC接口前，必须先发起命令获取自己的令牌随机量，来实现该随机量在服务端/远程钱包两端的同步
+4、游戏服务端将获取的令牌随机量、本地令牌固定量合成为访问令牌，将令牌编号、访问令牌附着在业务指令中一起上传
+5、远程钱包收到上传的令牌编号、访问令牌，和本地HMAC计算结果比对，一致则允许执行业务指令，否则拒绝
+6、对于WebSocket模式，可以在连接认证时缓存认证结果，连接期间无需再次上传访问令牌
+二、特约全节点访问游戏服务端
+1、特约全节点在访问游戏服务端接口时，在参数上附加相应的令牌编号、令牌随机量，以及据此计算的访问令牌
+2、游戏服务端通过本地的令牌固定量、接口上收到的令牌随机量以及参与计算的数据（事先约定）计算访问令牌，和收到的访问令牌比对，实现认证</li>
+<li>全节点RPC接口。全节点RPC接口上实现的操作指令分为三类：
+1、任何连接者都可以执行的指令
+2、本地连接才可以执行的指令
+3、限定执行指令，例如限定钱包、限定来访者令牌等</li>
+<li>
+<p><strong>线上版本使用HTTPS协议替换所有HTTP协议</strong></p>
+<ul>
+<li>可靠的证书生成工具例如 Openssl</li>
+<li>ssl开启设定全局统一</li>
+</ul>
+</li>
+</ul>
+</div></div><div data-title="order.pay" class="keyline-top section contain clearfix " data-reactid="52"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="53"><h3 id="orderpay">order.pay</h3>
+<p>钱包接收订单、签发支付交易并广播至对等网络。
+@note 采用 OP_RETURN 将订单流水和支付交易捆绑在一起，用以作为兑付凭证
+@note 游戏APP可以采用 URL Schema / 二维码图像等方式，将订单内容 [{game_id} {user_id} {order_sn} {order_sum}] 传递给钱包。</p>
+<ul>
+<li>开放式连接器 N - 授权式连接器 Y - 控制台连接器 Y -</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>game_id</code></td>
+<td>游戏编号</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td>玩家编号</td>
+</tr>
+<tr>
+<td><code>order_sn</code></td>
+<td>订单编号</td>
+</tr>
+<tr>
+<td><code>order_sum</code></td>
+<td>订单金额</td>
+</tr>
+</tbody>
+</table>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="54"><h4 id="可访问性-2">可访问性</h4>
+<h4 id="example-request-5">Example request</h4>
+<h4 id="example-request-body-2">Example request body</h4>
+<pre class='hljs'>[
+  <span class="hljs-string">"{game_id}"</span>,
+  <span class="hljs-string">"{user_id}"</span>,
+  <span class="hljs-string">"{order_sn}"</span>,
+  <span class="hljs-string">"{order_sum}"</span>
+]</pre>
+<h4 id="example-response-3">Example Response</h4>
+</div></div><div data-title="order.query" class="keyline-top section contain clearfix " data-reactid="55"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="56"><h3 id="orderquery">order.query</h3>
+<p>查询订单支付状态。一般从游戏服务端发起请求。</p>
+<ul>
+<li>开放式连接器 N - 授权式连接器 Y - 控制台连接器 Y -</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>game_id</code></td>
+<td>游戏编号</td>
+</tr>
+<tr>
+<td><code>order_group</code></td>
+<td>订单流水号数组</td>
+</tr>
+</tbody>
+</table>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="57"><h4 id="可访问性-3">可访问性</h4>
+<h4 id="example-request-6">Example request</h4>
+<h4 id="example-request-body-3">Example request body</h4>
+<pre class='hljs'>[
+  <span class="hljs-string">"{game_id}"</span>,
+  <span class="hljs-string">"{order_group}"</span>
+]</pre>
+<h4 id="example-response-4">Example response</h4>
+<pre class='hljs'>[
+  {
+    <span class="hljs-attr">"oper"</span>: <span class="hljs-string">"pay"</span>,
+    <span class="hljs-attr">"cid"</span>: <span class="hljs-string">"{游戏编号}"</span>,
+    <span class="hljs-attr">"uid"</span>: <span class="hljs-string">"{玩家编号}"</span>,
+    <span class="hljs-attr">"sn"</span>: <span class="hljs-string">"{订单号}"</span>
+  }
+]</pre>
+</div></div><div data-title="prop.order" class="keyline-top section contain clearfix " data-reactid="58"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="59"><h3 id="proporder">prop.order</h3>
+<p>游戏服务端制备并送出道具。</p>
+<ul>
+<li>开放式连接器 N - 授权式连接器 Y - 控制台连接器 Y -</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>game_id</code></td>
+<td>游戏编号</td>
+</tr>
+<tr>
+<td><code>prop_ori_id</code></td>
+<td>道具原始</td>
+</tr>
+<tr>
+<td><code>prop_value</code></td>
+<td>道具含金量</td>
+</tr>
+<tr>
+<td><code>user_addr</code></td>
+<td>游戏内玩家的有效地址</td>
+</tr>
+</tbody>
+</table>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="60"><h4 id="可访问性-4">可访问性</h4>
+<h4 id="example-request-7">Example request</h4>
+<h4 id="example-request-body-4">Example request body</h4>
+<pre class='hljs'>[
+  <span class="hljs-string">"{game_id}"</span>,
+  <span class="hljs-string">"{prop_ori_id}"</span>,
+  <span class="hljs-string">"{prop_value}"</span>,
+  <span class="hljs-string">"{user_addr}"</span>
+]</pre>
+<h4 id="example-response-5">Example response</h4>
+<pre class='hljs'>{
+  <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"{当前道具所在交易哈希}"</span>,
+  <span class="hljs-attr">"cid"</span>: <span class="hljs-string">"{游戏编码}"</span>,
+  <span class="hljs-attr">"pid"</span>: <span class="hljs-string">"{道具编码}"</span>,
+  <span class="hljs-attr">"oid"</span>: <span class="hljs-string">"{道具原始编码}"</span>,
+  <span class="hljs-attr">"gold"</span>: <span class="hljs-string">"{道具含金量}"</span>,
+  <span class="hljs-attr">"addr"</span>: <span class="hljs-string">"{目标地址}"</span>,
+}</pre>
+</div></div><div data-title="GIP0009 游戏道具的空投" class="keyline-top section contain clearfix " data-reactid="61"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="62"><h2 id="gip0009-游戏道具的空投">GIP0009 游戏道具的空投</h2>
+<p>Layer: Consensus</p>
+<p>Title: Bonus for Potential Game Player</p>
+<p>Status: Draft</p>
+<p>Author：bookman</p>
+<p>Type: Standards Track</p>
+<p>Created: 2018-08-15</p>
+<p>Summary：向潜在游戏玩家分发游戏道具的解决方案</p>
+</div></div><div data-title="游戏道具空投流程" class="keyline-top section contain clearfix " data-reactid="63"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="64"><h3 id="游戏道具空投流程">游戏道具空投流程</h3>
+<p>1、游戏厂商批量生成若干道具
+2、游戏厂商查询潜在游戏玩家，向其地址投放道具
+3、游戏玩家根据地址中包含的游戏信息，申领游戏专用地址
+4、钱包系统将先前收到的道具转入该专用地址，以便在游戏中顺利确权
+5、玩家登录游戏，使用先前获取的道具</p>
+<p>@note 关于游戏地址
+钱包按照 游戏ID + 玩家游戏内ID 的组合，为玩家分配游戏专用地址。玩家在游戏中获取的道具将会发往该地址。
+空投道具的行为一般发生于玩家进入游戏前，因此游戏只能将其投放至玩家玩过的其它游戏的专用地址。
+这些错位的道具无法在该专用地址对应的游戏中确权，因此当玩家真正进入目标游戏时，钱包必须主动提示用户进行道具的迁移。
+当迁移完成后，用户再次登录目标游戏时，就可以对这些道具进行确权，从而在游戏中合法使用它们。</p>
+</div></div><div data-title="和区块数据相关的接口" class="keyline-top section contain clearfix " data-reactid="65"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="66"><h2 id="和区块数据相关的接口">和区块数据相关的接口</h2>
+</div></div><div data-title="查询区块信息" class="keyline-top section contain clearfix " data-reactid="67"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="68"><h3 id="查询区块信息">查询区块信息</h3>
+<p>支持分页</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="69"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/blocks</div>
+    </div>
+<h4 id="example-request-8">Example Request</h4>
+<h4 id="example-response-6">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"blocks"</span>: [
+      {
+        <span class="hljs-attr">"height"</span>: <span class="hljs-number">544972</span>,
+        <span class="hljs-attr">"size"</span>: <span class="hljs-number">1126</span>,
+        <span class="hljs-attr">"virtualSize"</span>: <span class="hljs-number">1126</span>,
+        <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"000000000000000001aadeb33e33230bf35eaa6d4303c57074a8040077c7aef1"</span>,
+        <span class="hljs-attr">"time"</span>: <span class="hljs-number">1535208512</span>,
+        <span class="hljs-attr">"txlength"</span>: <span class="hljs-number">5</span>,
+        <span class="hljs-attr">"poolInfo"</span>: {}
+      }, {
+        <span class="hljs-attr">"height"</span>: <span class="hljs-number">544971</span>,
+        <span class="hljs-attr">"size"</span>: <span class="hljs-number">33307</span>,
+        <span class="hljs-attr">"virtualSize"</span>: <span class="hljs-number">33307</span>,
+        <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"000000000000000000b193ca28b0388c6900cde1ee3d77578136a4cbbe9a2d59"</span>,
+        <span class="hljs-attr">"time"</span>: <span class="hljs-number">1535208493</span>,
+        <span class="hljs-attr">"txlength"</span>: <span class="hljs-number">72</span>,
+        <span class="hljs-attr">"poolInfo"</span>: {
+            <span class="hljs-attr">"poolName"</span>: <span class="hljs-string">"AntMiner"</span>,
+            <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://bitmaintech.com/"</span>
+        }
+      }
+    ],
+    <span class="hljs-attr">"length"</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-attr">"pagination"</span>: {
+        <span class="hljs-attr">"next"</span>: <span class="hljs-string">"2018-08-26"</span>,
+        <span class="hljs-attr">"prev"</span>: <span class="hljs-string">"2018-08-24"</span>,
+        <span class="hljs-attr">"currentTs"</span>: <span class="hljs-number">1535241599</span>,
+        <span class="hljs-attr">"current"</span>: <span class="hljs-string">"2018-08-25"</span>,
+        <span class="hljs-attr">"isToday"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"more"</span>: <span class="hljs-literal">false</span>
+    }
+}</pre>
+</div></div><div data-title="根据哈希查询区块" class="keyline-top section contain clearfix " data-reactid="70"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="71"><h3 id="根据哈希查询区块">根据哈希查询区块</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="72"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/block/:hash</div>
+    </div>
+<h4 id="example-request-9">Example Request</h4>
+<h4 id="example-response-7">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"hash"</span>: <span class="hljs-string">"000000000000000001aadeb33e33230bf35eaa6d4303c57074a8040077c7aef1"</span>,
+    <span class="hljs-attr">"size"</span>: <span class="hljs-number">1126</span>,
+    <span class="hljs-attr">"height"</span>: <span class="hljs-number">544972</span>,
+    <span class="hljs-attr">"version"</span>: <span class="hljs-number">536870912</span>,
+    <span class="hljs-attr">"merkleroot"</span>: <span class="hljs-string">"820df9ed8f57fe6464e5032fe0a9cbf4f986d793dcf78192b8a899993ba27d4b"</span>,
+    <span class="hljs-attr">"tx"</span>: [<span class="hljs-string">"38f6aa1c8112d681be031ea5113c1d4ffa9d245e0515cf27ed45210307cba86f"</span>, <span class="hljs-string">"2b45705210e20bbcb1f8c22ab26cddca086964f0122df42cd3dc48a2e1c563aa"</span>, <span class="hljs-string">"382cc1a07ccfc94676aa6373c4d19ac3a8485064b665335d270713393f0d6514"</span>, <span class="hljs-string">"60fe5f9173a1c78f2e0cbcff2b69baef5b90ee437c7363a367cbffb0e3a3c755"</span>, <span class="hljs-string">"ec1e19f1e121b1650d174e322bd3b674e0c943e5db6bc4a5422d6f177ea89bf3"</span>],
+    <span class="hljs-attr">"time"</span>: <span class="hljs-number">1535208512</span>,
+    <span class="hljs-attr">"nonce"</span>: <span class="hljs-number">4137301843</span>,
+    <span class="hljs-attr">"bits"</span>: <span class="hljs-number">402788059</span>,
+    <span class="hljs-attr">"difficulty"</span>: <span class="hljs-number">534246483976</span>,
+    <span class="hljs-attr">"chainwork"</span>: <span class="hljs-string">"000000000000000000000000000000000000000000bc51a0a20e00709ff0f905"</span>,
+    <span class="hljs-attr">"confirmations"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"previousblockhash"</span>: <span class="hljs-string">"000000000000000000b193ca28b0388c6900cde1ee3d77578136a4cbbe9a2d59"</span>,
+    <span class="hljs-attr">"reward"</span>: <span class="hljs-number">12.50007423</span>,
+    <span class="hljs-attr">"isMainChain"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"poolInfo"</span>: {}
+}</pre>
+</div></div><div data-title="获取块原始数据" class="keyline-top section contain clearfix " data-reactid="73"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="74"><h3 id="获取块原始数据">获取块原始数据</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="75"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/rawblock/:hash</div>
+    </div>
+<h4 id="example-request-10">Example Request</h4>
+<h4 id="example-response-8">Example Response</h4>
+<pre class='hljs'>{
+  <span class="hljs-attr">"rawblock"</span>:<span class="hljs-string">"00000020592d9abecba4368157773deee1cd00698c38b028ca93b1000000000000000000820df9ed8f57fe6464e5032fe0a9cbf4f986d793dcf78192b8a899993ba27d4b406c815bdb0e021853379af60501000000010000000000000000000000000000000000000000000000000000000000000000ffffffff5c03cc5008192f5669614254432f4d696e6564206279206e6d73393133352f2cfabe6d6d184dc8e1ef0d19eddd4581a029620e0de25eaad2d6a1787c9df61d782045f37f0400000000000000109b63d30764e69a2d914f1943512b0100ffffffff017f99814a000000001976a914f1c075a01882ae0972f95d3a4177c86c852b7d9188ac000000000100000001e19cfde39d5ce89d39200dd0e7e7bbc9a2ea8bcf3a9c74b15edb40b45c921240000000006b483045022100f06cf926c0c630f678434cb6b8eb602064d0615f41bca5ad3c2b31d87692ab470220149e26ee6d4b0fb375dcb09ef81996365b853a8538be8cc0dc61b5db9f9e71be4121038dcabe66cc702624e6c7f2a437df7c36a68962a9becaa0f5f3e68a36839b5faaffffffff01c6dffe65010000001976a9146279b5d9e239500612d4f57d9cb1383bc6957a2288ac000000000200000001e7023fd9f341275c71181dc8797c987495d8fbe12db5619ac86d8c3e2fb1c197010000006b4830450221008a4a6b2d29bb5c5d96f55db2f513f8ef584aaa313c9112c745647fbd9d104cc00220646830de592a2ccea9abd9e30b4d9ded0cacbc66515792e56ca6291f02da84dd412102e730398dca951ded3e419829579c857f956d861ad5738d032ef17ccd2ca370aeffffffff02600e4e07000000001976a914cbe7d31810af5abb158d531fce0be1048021a30a88ace6b90100000000001976a9140a061221aa52f3942e8b39ad2b2c98abf058833488ac0000000002000000017755ce1733b8f89f14feceff96c9094ed571d78554478e733fa42abdfcffb5f3010000006b483045022100a9150be4afc7c0caffeed0b8f138701fc340be8ab0a0612862e600169b738acc0220792e8e9a274debb52c7a4ff76b84dbe1bc546efac36076dbac7d2211531f111b41210346e53d43ae00387c5198579129d4cf2e03ec6a66d7aee2f3efeba10c07cd64b3ffffffff02ff54bd03000000001976a914aa1604b040a7d3c86401fba95d1731b992d366e888ac19798c0d000000001976a9143bf58baf7fb8b69f7f4ffbb1a146c54ac78873e188ac00000000010000000145213921cec40e505c6f16e649b8205944e31dc85182a843909b234da605bc42010000006b483045022100bdf5c7dcf2baf938be5d336b222591f8e3435e9d67d8330544cc0cab40c631a002207979ad560335d35596e0d0141ff1e5ba7b363ce83a84328e6b549185b8506455412103cb8a7ef04cadfdc25425d84162f553bfee89b3109e939a3998c336b2f80642f0ffffffff02abdb00000000000017a9140c1ffe16047f2177e9e55b7b22e4ab699332b0d4870f763800000000001976a91429c69c5c468eab11fc22a558d80d7c555465595c88ac00000000"</span>
+}</pre>
+</div></div><div data-title="根据高度查询区块" class="keyline-top section contain clearfix " data-reactid="76"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="77"><h3 id="根据高度查询区块">根据高度查询区块</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="78"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/block-index/:height</div>
+    </div>
+<h4 id="example-request-11">Example Request</h4>
+<h4 id="example-response-9">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"blockHash"</span>: <span class="hljs-string">"000000000000000001aadeb33e33230bf35eaa6d4303c57074a8040077c7aef1"</span>
+}</pre>
+</div></div><div data-title="和地址相关的接口" class="keyline-top section contain clearfix " data-reactid="79"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="80"><h2 id="和地址相关的接口">和地址相关的接口</h2>
+</div></div><div data-title="根据地址字符串，获取相应地址的关联信息" class="keyline-top section contain clearfix " data-reactid="81"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="82"><h3 id="根据地址字符串，获取相应地址的关联信息">根据地址字符串，获取相应地址的关联信息</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="83"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addr/:addr</div>
+    </div>
+<h4 id="example-request-12">Example Request</h4>
+<h4 id="example-response-10">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"addrStr"</span>: <span class="hljs-string">"qzj93tjl4unastps6c4rmg0xd6tgfxmmsu83r39jac"</span>,
+    <span class="hljs-attr">"balance"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-attr">"balanceSat"</span>: <span class="hljs-number">1000000000</span>,
+    <span class="hljs-attr">"totalReceived"</span>: <span class="hljs-number">21.738</span>,
+    <span class="hljs-attr">"totalReceivedSat"</span>: <span class="hljs-number">2173800000</span>,
+    <span class="hljs-attr">"totalSent"</span>: <span class="hljs-number">11.738</span>,
+    <span class="hljs-attr">"totalSentSat"</span>: <span class="hljs-number">1173800000</span>,
+    <span class="hljs-attr">"unconfirmedBalance"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"unconfirmedBalanceSat"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"unconfirmedTxApperances"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"txApperances"</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-attr">"transactions"</span>: [
+      <span class="hljs-string">"f0a56e7eedb628e8ff5bd9399aa0f4a1cc909168bb66129e170708ca8ff7911f"</span>, 
+      <span class="hljs-string">"b1f14329a2ce13415f2c083aadb75e78cc01315a68a8448ecadc24794b8309fd"</span>, 
+      <span class="hljs-string">"ad0ccb3718201d7392b4d49ef0df56557dad8cee4d5ab9b9605b34fa5fc05a2c"</span>
+    ]
+}</pre>
+</div></div><div data-title="根据地址字符串，获取相应地址的UTXO集合" class="keyline-top section contain clearfix " data-reactid="84"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="85"><h3 id="根据地址字符串，获取相应地址的utxo集合">根据地址字符串，获取相应地址的UTXO集合</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="86"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addr/:addr/utxo</div>
+    </div>
+<h4 id="example-request-13">Example Request</h4>
+<h4 id="example-response-11">Example Response</h4>
+<pre class='hljs'>[
+  {
+    <span class="hljs-attr">"address"</span>: <span class="hljs-string">"qzj93tjl4unastps6c4rmg0xd6tgfxmmsu83r39jac"</span>,
+    <span class="hljs-attr">"txid"</span>: <span class="hljs-string">"ad0ccb3718201d7392b4d49ef0df56557dad8cee4d5ab9b9605b34fa5fc05a2c"</span>,
+    <span class="hljs-attr">"vout"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"scriptPubKey"</span>: <span class="hljs-string">"76a914a458ae5faf27d82c30d62a3da1e66e96849b7b8788ac"</span>,
+    <span class="hljs-attr">"amount"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-attr">"satoshis"</span>: <span class="hljs-number">1000000000</span>,
+    <span class="hljs-attr">"height"</span>: <span class="hljs-number">544967</span>,
+    <span class="hljs-attr">"confirmations"</span>: <span class="hljs-number">13</span>
+  }
+]</pre>
+</div></div><div data-title="查询多个地址的UTXO合集" class="keyline-top section contain clearfix " data-reactid="87"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="88"><h3 id="查询多个地址的utxo合集">查询多个地址的UTXO合集</h3>
+<p>地址字符串采用逗分格式，最多4个</p>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="89"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addrs/:addrs/utxo</div>
+    </div>
+<h4 id="example-request-14">Example Request</h4>
+<h4 id="example-response-12">Example Response</h4>
+<pre class='hljs'>[
+  {
+    <span class="hljs-attr">"address"</span>: <span class="hljs-string">"qzj93tjl4unastps6c4rmg0xd6tgfxmmsu83r39jac"</span>,
+    <span class="hljs-attr">"txid"</span>: <span class="hljs-string">"ad0ccb3718201d7392b4d49ef0df56557dad8cee4d5ab9b9605b34fa5fc05a2c"</span>,
+    <span class="hljs-attr">"vout"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"scriptPubKey"</span>: <span class="hljs-string">"76a914a458ae5faf27d82c30d62a3da1e66e96849b7b8788ac"</span>,
+    <span class="hljs-attr">"amount"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-attr">"satoshis"</span>: <span class="hljs-number">1000000000</span>,
+    <span class="hljs-attr">"height"</span>: <span class="hljs-number">544967</span>,
+    <span class="hljs-attr">"confirmations"</span>: <span class="hljs-number">14</span>
+  }, 
+  {
+    <span class="hljs-attr">"address"</span>: <span class="hljs-string">"qqx4tc82a2qepfkfmsff9z9eqwtacckeuvre8x5dkf"</span>,
+    <span class="hljs-attr">"txid"</span>: <span class="hljs-string">"b1f14329a2ce13415f2c083aadb75e78cc01315a68a8448ecadc24794b8309fd"</span>,
+    <span class="hljs-attr">"vout"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"scriptPubKey"</span>: <span class="hljs-string">"76a9140d55e0eaea8190a6c9dc129288b90397dc62d9e388ac"</span>,
+    <span class="hljs-attr">"amount"</span>: <span class="hljs-number">0.00058477</span>,
+    <span class="hljs-attr">"satoshis"</span>: <span class="hljs-number">58477</span>,
+    <span class="hljs-attr">"height"</span>: <span class="hljs-number">544968</span>,
+    <span class="hljs-attr">"confirmations"</span>: <span class="hljs-number">13</span>
+  }, 
+  {
+    <span class="hljs-attr">"address"</span>: <span class="hljs-string">"qqx4tc82a2qepfkfmsff9z9eqwtacckeuvre8x5dkf"</span>,
+    <span class="hljs-attr">"txid"</span>: <span class="hljs-string">"b6515df332afe96975b910474101bcad9f3704e36a025cb3298a09d7df1ed174"</span>,
+    <span class="hljs-attr">"vout"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"scriptPubKey"</span>: <span class="hljs-string">"76a9140d55e0eaea8190a6c9dc129288b90397dc62d9e388ac"</span>,
+    <span class="hljs-attr">"amount"</span>: <span class="hljs-number">10.03049683</span>,
+    <span class="hljs-attr">"satoshis"</span>: <span class="hljs-number">1003049683</span>,
+    <span class="hljs-attr">"height"</span>: <span class="hljs-number">491481</span>,
+    <span class="hljs-attr">"confirmations"</span>: <span class="hljs-number">53500</span>
+  }
+]</pre>
+</div></div><div data-title="多地址交易查询" class="keyline-top section contain clearfix " data-reactid="90"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="91"><h3 id="多地址交易查询">多地址交易查询</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="92"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addrs/:addrs/txs</div>
+    </div>
+<h4 id="example-request-15">Example Request</h4>
+<h4 id="example-response-13">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"totalItems"</span>: <span class="hljs-number">6</span>,
+    <span class="hljs-attr">"from"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"to"</span>: <span class="hljs-number">6</span>,
+    <span class="hljs-attr">"items"</span>: [{
+        <span class="hljs-attr">"txid"</span>: <span class="hljs-string">"4da4f78590c1b648e127c30bdf10318e8fab4fc3d735815e71b69f5fec4e021d"</span>,
+        <span class="hljs-attr">"version"</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">"locktime"</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">"vin"</span>: [{
+            <span class="hljs-attr">"txid"</span>: <span class="hljs-string">"efd702c094ad62f2e42a10eaa909428ec956c1d737e561ef25bbc2f523a5be7e"</span>,
+            <span class="hljs-attr">"vout"</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-attr">"sequence"</span>: <span class="hljs-number">4294967295</span>,
+            <span class="hljs-attr">"n"</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">"scriptSig"</span>: {
+                <span class="hljs-attr">"hex"</span>: <span class="hljs-string">"4830450220369720a96415c40111082c9d3a2034cb09efb28843ef7ad44a9038047e0da8b7022100f5b6087747de69053490bc01fb38bd3651584b0bd322b7228793cd4d25a9d6e4014104a8f73f8cfc61dd803b472e41df3c3de487b165ac7bc13f5b9f562a5fe0aef7675b08447c7826fff031df22302095ce5084a9daec16fdc82aba3a1cbedbfde670"</span>,
+                <span class="hljs-attr">"asm"</span>: <span class="hljs-string">"30450220369720a96415c40111082c9d3a2034cb09efb28843ef7ad44a9038047e0da8b7022100f5b6087747de69053490bc01fb38bd3651584b0bd322b7228793cd4d25a9d6e401 04a8f73f8cfc61dd803b472e41df3c3de487b165ac7bc13f5b9f562a5fe0aef7675b08447c7826fff031df22302095ce5084a9daec16fdc82aba3a1cbedbfde670"</span>
+            },
+            <span class="hljs-attr">"addr"</span>: <span class="hljs-string">"qqx4tc82a2qepfkfmsff9z9eqwtacckeuvre8x5dkf"</span>,
+            <span class="hljs-attr">"valueSat"</span>: <span class="hljs-number">1000000000</span>,
+            <span class="hljs-attr">"value"</span>: <span class="hljs-number">10</span>,
+            <span class="hljs-attr">"doubleSpentTxID"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"isConfirmed"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"confirmations"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"unconfirmedInput"</span>: <span class="hljs-literal">null</span>
+        }],
+        <span class="hljs-attr">"valueIn"</span>: <span class="hljs-number">10</span>,
+        <span class="hljs-attr">"fees"</span>: <span class="hljs-number">0.0001</span>,
+        <span class="hljs-attr">"vout"</span>: [{
+            <span class="hljs-attr">"value"</span>: <span class="hljs-string">"0.50000000"</span>,
+            <span class="hljs-attr">"n"</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">"scriptPubKey"</span>: {
+                <span class="hljs-attr">"hex"</span>: <span class="hljs-string">"76a914aa064dd44a83a6592704b3e4df54be7fd5ac5a2488ac"</span>,
+                <span class="hljs-attr">"asm"</span>: <span class="hljs-string">"OP_DUP OP_HASH160 aa064dd44a83a6592704b3e4df54be7fd5ac5a24 OP_EQUALVERIFY OP_CHECKSIG"</span>,
+                <span class="hljs-attr">"addresses"</span>: [<span class="hljs-string">"qz4qvnw5f2p6vkf8qje7fh65helattz6ys2nazryw5"</span>],
+                <span class="hljs-attr">"type"</span>: <span class="hljs-string">"pubkeyhash"</span>
+            },
+            <span class="hljs-attr">"spentTxId"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"spentIndex"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"spentHeight"</span>: <span class="hljs-literal">null</span>
+        }, {
+            <span class="hljs-attr">"value"</span>: <span class="hljs-string">"9.49990000"</span>,
+            <span class="hljs-attr">"n"</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-attr">"scriptPubKey"</span>: {
+                <span class="hljs-attr">"hex"</span>: <span class="hljs-string">"76a9140d55e0eaea8190a6c9dc129288b90397dc62d9e388ac"</span>,
+                <span class="hljs-attr">"asm"</span>: <span class="hljs-string">"OP_DUP OP_HASH160 0d55e0eaea8190a6c9dc129288b90397dc62d9e3 OP_EQUALVERIFY OP_CHECKSIG"</span>,
+                <span class="hljs-attr">"addresses"</span>: [<span class="hljs-string">"qqx4tc82a2qepfkfmsff9z9eqwtacckeuvre8x5dkf"</span>],
+                <span class="hljs-attr">"type"</span>: <span class="hljs-string">"pubkeyhash"</span>
+            },
+            <span class="hljs-attr">"spentTxId"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"spentIndex"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"spentHeight"</span>: <span class="hljs-literal">null</span>
+        }],
+        <span class="hljs-attr">"blockhash"</span>: <span class="hljs-string">"00000000000000010cc748cb7c481b2d4e2c1c142c6295b21c148fb3c0e62771"</span>,
+        <span class="hljs-attr">"blockheight"</span>: <span class="hljs-number">290250</span>,
+        <span class="hljs-attr">"confirmations"</span>: <span class="hljs-number">254731</span>,
+        <span class="hljs-attr">"time"</span>: <span class="hljs-number">1394652831</span>,
+        <span class="hljs-attr">"blocktime"</span>: <span class="hljs-number">1394652831</span>,
+        <span class="hljs-attr">"valueOut"</span>: <span class="hljs-number">9.9999</span>,
+        <span class="hljs-attr">"size"</span>: <span class="hljs-number">258</span>
+    }]
+}</pre>
+</div></div><div data-title="查询指定地址余额" class="keyline-top section contain clearfix " data-reactid="93"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="94"><h3 id="查询指定地址余额">查询指定地址余额</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="95"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addr/:addr/balance</div>
+    </div>
+<h4 id="example-request-16">Example Request</h4>
+<h4 id="example-response-14">Example Response</h4>
+<pre class='hljs'>  1.99900114</pre>
+</div></div><div data-title="查询指定地址总接收" class="keyline-top section contain clearfix " data-reactid="96"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="97"><h3 id="查询指定地址总接收">查询指定地址总接收</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="98"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addr/:addr/totalReceived</div>
+    </div>
+<h4 id="example-request-17">Example Request</h4>
+<h4 id="example-response-15">EXample Response</h4>
+<pre class='hljs'>  1.99900114</pre>
+</div></div><div data-title="查询指定地址总花费" class="keyline-top section contain clearfix " data-reactid="99"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="100"><h3 id="查询指定地址总花费">查询指定地址总花费</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="101"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addr/:addr/totalSent</div>
+    </div>
+<h4 id="example-request-18">Example Request</h4>
+<h4 id="example-response-16">Example Response</h4>
+<pre class='hljs'>  0</pre>
+</div></div><div data-title="查询指定地址未确认金额" class="keyline-top section contain clearfix " data-reactid="102"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="103"><h3 id="查询指定地址未确认金额">查询指定地址未确认金额</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="104"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/addr/:addr/unconfirmedBalance</div>
+    </div>
+<h4 id="example-request-19">Example Request</h4>
+<h4 id="example-response-17">Example Response</h4>
+<pre class='hljs'>  0</pre>
+</div></div><div data-title="和交易相关的接口" class="keyline-top section contain clearfix " data-reactid="105"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="106"><h2 id="和交易相关的接口">和交易相关的接口</h2>
+</div></div><div data-title="根据交易ID获取交易信息" class="keyline-top section contain clearfix " data-reactid="107"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="108"><h3 id="根据交易id获取交易信息">根据交易ID获取交易信息</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="109"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/tx/:txid</div>
+    </div>
+<h4 id="example-request-20">Example Request</h4>
+<h4 id="example-response-18">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"txid"</span>:<span class="hljs-string">"a0aa92665cd61c5c2b2fe6f26287a226fb6fea033c59881298de36775773ce70"</span>,
+    <span class="hljs-attr">"version"</span>:<span class="hljs-number">1</span>,
+    <span class="hljs-attr">"locktime"</span>:<span class="hljs-number">0</span>,
+    <span class="hljs-attr">"isCoinBase"</span>:<span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"vin"</span>:[     
+        {
+            <span class="hljs-attr">"coinbase"</span>:<span class="hljs-string">"03785708202f5669614254432f4d696e656420627920677a7867666a7a687339313330302f2cfabe6d6dcdfdf8fed333ae7546bc9a3ee4ede9d1bf98e4ef3efd7cae20d6adb23b77ac57040000000000000010d7f0b90bf326c24d7fcbc32d79300100"</span>,
+            <span class="hljs-attr">"sequence"</span>:<span class="hljs-number">4294967295</span>,
+            <span class="hljs-attr">"n"</span>:<span class="hljs-number">0</span>
+        }
+    ],
+    <span class="hljs-attr">"vout"</span>:[
+        {
+            <span class="hljs-attr">"value"</span>:<span class="hljs-string">"12.58185276"</span>,
+            <span class="hljs-attr">"n"</span>:<span class="hljs-number">0</span>,
+            <span class="hljs-attr">"scriptPubKey"</span>:{
+                <span class="hljs-attr">"hex"</span>:<span class="hljs-string">"76a914f1c075a01882ae0972f95d3a4177c86c852b7d9188ac"</span>,
+                <span class="hljs-attr">"asm"</span>:<span class="hljs-string">"OP_DUP OP_HASH160 f1c075a01882ae0972f95d3a4177c86c852b7d91 OP_EQUALVERIFY OP_CHECKSIG"</span>,
+                <span class="hljs-attr">"addresses"</span>:[<span class="hljs-string">"qrcuqadqrzp2uztjl9wn5sthepkg22majyxw4gmv6p"</span>],
+                <span class="hljs-attr">"type"</span>:<span class="hljs-string">"pubkeyhash"</span>
+            },
+            <span class="hljs-attr">"spentTxId"</span>:<span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"spentIndex"</span>:<span class="hljs-literal">null</span>,
+            <span class="hljs-attr">"spentHeight"</span>:<span class="hljs-literal">null</span>
+        }
+    ],
+    <span class="hljs-attr">"blockhash"</span>:<span class="hljs-string">"00000000000000000076b2016cde9097d68424e238c8a60a4de552895eb1cc32"</span>,
+    <span class="hljs-attr">"blockheight"</span>:<span class="hljs-number">546680</span>,
+    <span class="hljs-attr">"confirmations"</span>:<span class="hljs-number">1</span>,
+    <span class="hljs-attr">"time"</span>:<span class="hljs-number">1536227565</span>,
+    <span class="hljs-attr">"blocktime"</span>:<span class="hljs-number">1536227565</span>,
+    <span class="hljs-attr">"valueOut"</span>:<span class="hljs-number">12.58185276</span>,
+    <span class="hljs-attr">"size"</span>:<span class="hljs-number">184</span>
+}</pre>
+</div></div><div data-title="根据交易ID，查询交易原始数据" class="keyline-top section contain clearfix " data-reactid="110"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="111"><h3 id="根据交易id，查询交易原始数据">根据交易ID，查询交易原始数据</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="112"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/rawtx/:txid</div>
+    </div>
+<h4 id="example-request-21">Example Request</h4>
+<h4 id="example-response-19">Example Response</h4>
+<pre class='hljs'>{
+  <span class="hljs-attr">"rawtx"</span>:<span class="hljs-string">"01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff2403c85008174d696e656420627920416e74506f6f6c3426205b816995350600008e0b0100ffffffff02b957824a000000001976a9141fefe863a7e0ddc767780ce3bedc564cf5cbda6388ace51d0000000000001976a914000000000000000000000000000000000000000088ac00000000"</span>
+}</pre>
+</div></div><div data-title="查询区块或地址相关交易列表" class="keyline-top section contain clearfix " data-reactid="113"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="114"><h3 id="查询区块或地址相关交易列表">查询区块或地址相关交易列表</h3>
+<p>支持分页</p>
+<p>入口参数</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>req.query.block</td>
+<td>区块哈希，二选一</td>
+</tr>
+<tr>
+<td>req.query.address</td>
+<td>地址，二选一</td>
+</tr>
+<tr>
+<td>req.query.pageNum</td>
+<td>页码，默认第一页</td>
+</tr>
+</tbody>
+</table>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="115"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/txs</div>
+    </div>
+<h4 id="example-request-22">Example Request</h4>
+<h4 id="example-response-20">Example Response</h4>
+<pre class='hljs'>{
+  <span class="hljs-attr">"pagesTotal"</span>:<span class="hljs-number">221</span>,
+  <span class="hljs-attr">"txs"</span>:[
+    {
+      <span class="hljs-attr">"txid"</span>:<span class="hljs-string">"44f814cb17bce592fffbfbc86f187c0ba67c71c37240444133ae5beda8a22a6f"</span>,
+      <span class="hljs-attr">"version"</span>:<span class="hljs-number">1</span>,
+      <span class="hljs-attr">"locktime"</span>:<span class="hljs-number">0</span>,
+      <span class="hljs-attr">"vin"</span>:[
+        {
+          <span class="hljs-attr">"txid"</span>:<span class="hljs-string">"4e857cc14a3848bf424c3d3f82d75a16d7c3f3011f699f9393b5cf3e1890e668"</span>,
+          <span class="hljs-attr">"vout"</span>:<span class="hljs-number">10</span>,
+          <span class="hljs-attr">"sequence"</span>:<span class="hljs-number">4294967295</span>,
+          <span class="hljs-attr">"n"</span>:<span class="hljs-number">0</span>,
+          <span class="hljs-attr">"scriptSig"</span>:{
+            <span class="hljs-attr">"hex"</span>:<span class="hljs-string">"483045022100d5d8ce5aa87d8686b4eb57c6fe97bf9fa9eade0885acd75abadac55caf7cc7fe022079eff5b52ea4ed5ff56a86b3fe8f6510d8457b202ee2c3fefc196bc8aa69ce7a0121038482c9aef4e72ee8ef2501dddf27bbca7f5711400c7a9d4adb6dba82746fd0eb"</span>,
+            <span class="hljs-attr">"asm"</span>:<span class="hljs-string">"3045022100d5d8ce5aa87d8686b4eb57c6fe97bf9fa9eade0885acd75abadac55caf7cc7fe022079eff5b52ea4ed5ff56a86b3fe8f6510d8457b202ee2c3fefc196bc8aa69ce7a[ALL] 038482c9aef4e72ee8ef2501dddf27bbca7f5711400c7a9d4adb6dba82746fd0eb"</span>
+          },
+          <span class="hljs-attr">"addr"</span>:<span class="hljs-string">"1Nde8sQVbD3MJXxSohQJvRWKZKx9Zfo4oZ"</span>,
+          <span class="hljs-attr">"valueSat"</span>:<span class="hljs-number">9263816813</span>,
+          <span class="hljs-attr">"value"</span>:<span class="hljs-number">92.63816813</span>,
+          <span class="hljs-attr">"doubleSpentTxID"</span>:<span class="hljs-literal">null</span>
+        }
+      ],
+      <span class="hljs-attr">"vout"</span>:[
+        {
+          <span class="hljs-attr">"value"</span>:<span class="hljs-string">"0.00527203"</span>,
+          <span class="hljs-attr">"n"</span>:<span class="hljs-number">0</span>,
+          <span class="hljs-attr">"scriptPubKey"</span>:{
+            <span class="hljs-attr">"hex"</span>:<span class="hljs-string">"a914b71350787646b97f2508010dd51dea5d6079773887"</span>,
+            <span class="hljs-attr">"asm"</span>:<span class="hljs-string">"OP_HASH160 b71350787646b97f2508010dd51dea5d60797738 OP_EQUAL"</span>,
+            <span class="hljs-attr">"addresses"</span>:[<span class="hljs-string">"3JP2iddqvycmRyZi944oVtN9eiSP57Tmwj"</span>],
+            <span class="hljs-attr">"type"</span>:<span class="hljs-string">"scripthash"</span>
+          },
+          <span class="hljs-attr">"spentTxId"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"spentIndex"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"spentHeight"</span>:<span class="hljs-literal">null</span>
+        }
+      ],
+      <span class="hljs-attr">"blockhash"</span>:<span class="hljs-string">"000000000000000000020ce5c7fb6f916e94cc8c4dcb8612eeb2fff52495ecfe"</span>,
+      <span class="hljs-attr">"blockheight"</span>:<span class="hljs-number">540209</span>,
+      <span class="hljs-attr">"confirmations"</span>:<span class="hljs-number">1</span>,
+      <span class="hljs-attr">"time"</span>:<span class="hljs-number">1536242593</span>,
+      <span class="hljs-attr">"blocktime"</span>:<span class="hljs-number">1536242593</span>,
+      <span class="hljs-attr">"valueOut"</span>:<span class="hljs-number">92.63780119</span>,
+      <span class="hljs-attr">"size"</span>:<span class="hljs-number">648</span>,
+      <span class="hljs-attr">"valueIn"</span>:<span class="hljs-number">92.63816813</span>,
+      <span class="hljs-attr">"fees"</span>:<span class="hljs-number">0.00036694</span>
+    }
+  ]
+}</pre>
+<pre class='hljs'>{
+  <span class="hljs-attr">"pagesTotal"</span>:<span class="hljs-number">1</span>,
+  <span class="hljs-attr">"txs"</span>:[
+    {
+      <span class="hljs-attr">"txid"</span>:<span class="hljs-string">"7f812fa570950279c0c366b25ff30a3b8fdc7f130516ca8d76794c0a4954a399"</span>,
+      <span class="hljs-attr">"version"</span>:<span class="hljs-number">1</span>,
+      <span class="hljs-attr">"locktime"</span>:<span class="hljs-number">0</span>,
+      <span class="hljs-attr">"vin"</span>:[
+        {
+          <span class="hljs-attr">"txid"</span>:<span class="hljs-string">"ad0ccb3718201d7392b4d49ef0df56557dad8cee4d5ab9b9605b34fa5fc05a2c"</span>,
+          <span class="hljs-attr">"vout"</span>:<span class="hljs-number">0</span>,
+          <span class="hljs-attr">"sequence"</span>:<span class="hljs-number">4294967295</span>,
+          <span class="hljs-attr">"n"</span>:<span class="hljs-number">0</span>,
+          <span class="hljs-attr">"scriptSig"</span>:{
+            <span class="hljs-attr">"hex"</span>:<span class="hljs-string">"483045022100c7b2408fd0dcffbcdd00feffad4daba55c0fc908a2ae5b1941db82904fd028e0022072a568f9d2190541c6431d92e2b1e722af1db6501cacf3e7941a99c29e4b0dff41210381c5d018624c510d551646e605596e425c80cfa1c154dad7099501ce566179f8"</span>,
+            <span class="hljs-attr">"asm"</span>:<span class="hljs-string">"3045022100c7b2408fd0dcffbcdd00feffad4daba55c0fc908a2ae5b1941db82904fd028e0022072a568f9d2190541c6431d92e2b1e722af1db6501cacf3e7941a99c29e4b0dff41 0381c5d018624c510d551646e605596e425c80cfa1c154dad7099501ce566179f8"</span>
+          },
+          <span class="hljs-attr">"addr"</span>:<span class="hljs-string">"qzj93tjl4unastps6c4rmg0xd6tgfxmmsu83r39jac"</span>,
+          <span class="hljs-attr">"valueSat"</span>:<span class="hljs-number">1000000000</span>,
+          <span class="hljs-attr">"value"</span>:<span class="hljs-number">10</span>,
+          <span class="hljs-attr">"doubleSpentTxID"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"isConfirmed"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"confirmations"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"unconfirmedInput"</span>:<span class="hljs-literal">null</span>
+        }
+      ],
+      <span class="hljs-attr">"valueIn"</span>:<span class="hljs-number">10</span>,
+      <span class="hljs-attr">"fees"</span>:<span class="hljs-number">0.00000382</span>,
+      <span class="hljs-attr">"vout"</span>:[
+        {
+          <span class="hljs-attr">"value"</span>:<span class="hljs-string">"1.63873531"</span>,
+          <span class="hljs-attr">"n"</span>:<span class="hljs-number">0</span>,
+          <span class="hljs-attr">"scriptPubKey"</span>:{
+            <span class="hljs-attr">"hex"</span>:<span class="hljs-string">"76a9149cb2f21046880cadffa76f13080194f6dd70a74488ac"</span>,
+            <span class="hljs-attr">"asm"</span>:<span class="hljs-string">"OP_DUP OP_HASH160 9cb2f21046880cadffa76f13080194f6dd70a744 OP_EQUALVERIFY OP_CHECKSIG"</span>,
+            <span class="hljs-attr">"addresses"</span>:[<span class="hljs-string">"qzwt9ussg6yqet0l5ah3xzqpjnmd6u98gsr6n83pqm"</span>],
+            <span class="hljs-attr">"type"</span>:<span class="hljs-string">"pubkeyhash"</span>
+          },
+          <span class="hljs-attr">"spentTxId"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"spentIndex"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"spentHeight"</span>:<span class="hljs-literal">null</span>
+        },
+        {
+          <span class="hljs-attr">"value"</span>:<span class="hljs-string">"8.36126087"</span>,
+          <span class="hljs-attr">"n"</span>:<span class="hljs-number">1</span>,
+          <span class="hljs-attr">"scriptPubKey"</span>:{
+            <span class="hljs-attr">"hex"</span>:<span class="hljs-string">"76a914a772af263fda5e95d6fc6461e6868d8aeb21499e88ac"</span>,
+            <span class="hljs-attr">"asm"</span>:<span class="hljs-string">"OP_DUP OP_HASH160 a772af263fda5e95d6fc6461e6868d8aeb21499e OP_EQUALVERIFY OP_CHECKSIG"</span>,
+            <span class="hljs-attr">"addresses"</span>:[<span class="hljs-string">"qznh9tex8ld9a9wkl3jxre5x3k9wkg2fncgchnmza5"</span>],
+            <span class="hljs-attr">"type"</span>:<span class="hljs-string">"pubkeyhash"</span>
+          },
+          <span class="hljs-attr">"spentTxId"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"spentIndex"</span>:<span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"spentHeight"</span>:<span class="hljs-literal">null</span>
+        }
+      ],
+      <span class="hljs-attr">"blockhash"</span>:<span class="hljs-string">"000000000000000001c807fe20a65c06afd7a26a57e3d909988709f357b841d7"</span>,
+      <span class="hljs-attr">"blockheight"</span>:<span class="hljs-number">544985</span>,
+      <span class="hljs-attr">"confirmations"</span>:<span class="hljs-number">1704</span>,
+      <span class="hljs-attr">"time"</span>:<span class="hljs-number">1535214645</span>,
+      <span class="hljs-attr">"blocktime"</span>:<span class="hljs-number">1535214645</span>,
+      <span class="hljs-attr">"valueOut"</span>:<span class="hljs-number">9.99999618</span>,
+      <span class="hljs-attr">"size"</span>:<span class="hljs-number">226</span>
+    }
+  ]
+}</pre>
+</div></div><div data-title="系统状态查询类接口" class="keyline-top section contain clearfix " data-reactid="116"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="117"><h2 id="系统状态查询类接口">系统状态查询类接口</h2>
+</div></div><div data-title="系统状态" class="keyline-top section contain clearfix " data-reactid="118"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="119"><h3 id="系统状态">系统状态</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="120"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/status</div>
+    </div>
+<h4 id="example-request-23">Example Request</h4>
+<h4 id="example-response-21">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"info"</span>: {
+        <span class="hljs-attr">"version"</span>: <span class="hljs-string">"bitcore-1.1.2"</span>,
+        <span class="hljs-attr">"blocks"</span>: <span class="hljs-number">544981</span>,
+        <span class="hljs-attr">"proxy"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"difficulty"</span>: <span class="hljs-number">559149630057</span>,
+        <span class="hljs-attr">"testnet"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"relayfee"</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">"errors"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"network"</span>: <span class="hljs-string">"livenet"</span>
+    }
+}</pre>
+</div></div><div data-title="同步状态" class="keyline-top section contain clearfix " data-reactid="121"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="122"><h3 id="同步状态">同步状态</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="123"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/sync</div>
+    </div>
+<h4 id="example-request-24">Example Request</h4>
+<h4 id="example-response-22">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"status"</span>: <span class="hljs-string">"finished"</span>,
+    <span class="hljs-attr">"blockChainHeight"</span>: <span class="hljs-number">544981</span>,
+    <span class="hljs-attr">"syncPercentage"</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">"height"</span>: <span class="hljs-number">544981</span>,
+    <span class="hljs-attr">"error"</span>: <span class="hljs-literal">null</span>,
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"bitcore node"</span>
+}</pre>
+</div></div><div data-title="API版本信息" class="keyline-top section contain clearfix " data-reactid="124"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="125"><h3 id="api版本信息">API版本信息</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="126"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/version</div>
+    </div>
+<h4 id="example-request-25">Example Request</h4>
+<h4 id="example-response-23">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"version"</span>:<span class="hljs-string">"5.0.0-beta.44"</span>
+}</pre>
+</div></div><div data-title="连接节点信息" class="keyline-top section contain clearfix " data-reactid="127"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="128"><h3 id="连接节点信息">连接节点信息</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="129"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/peer</div>
+    </div>
+<h4 id="example-request-26">Example Request</h4>
+<h4 id="example-response-24">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"connected"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"host"</span>: <span class="hljs-string">"127.0.0.1"</span>,
+    <span class="hljs-attr">"port"</span>: <span class="hljs-literal">null</span>
+}</pre>
+</div></div><div data-title="手续费估算" class="keyline-top section contain clearfix " data-reactid="130"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="131"><h3 id="手续费估算">手续费估算</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="132"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/public/utils/estimatefee</div>
+    </div>
+<h4 id="example-request-27">Example Request</h4>
+<h4 id="example-response-25">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"2"</span>:<span class="hljs-number">0.00001</span>
+}</pre>
+</div></div><div data-title="汇率" class="keyline-top section contain clearfix " data-reactid="133"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="134"><h3 id="汇率">汇率</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="135"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/currency</div>
+    </div>
+<h4 id="example-request-28">Example Request</h4>
+<h4 id="example-response-26">Example Response</h4>
+<pre class='hljs'>{
+    <span class="hljs-attr">"status"</span>: <span class="hljs-number">200</span>,
+    <span class="hljs-attr">"data"</span>: {
+        <span class="hljs-attr">"kraken"</span>: <span class="hljs-number">531.4</span>
+    }
+}</pre>
+</div></div><div data-title="支持币种" class="keyline-top section contain clearfix " data-reactid="136"><div class="space-bottom8 col6 pad2x prose clip" data-reactid="137"><h3 id="支持币种">支持币种</h3>
+</div><div class="space-bottom4 col6 pad2 prose clip fill-light space-top5" data-reactid="138"><div class='endpoint dark fill-dark round '>
+      <div class='round-left pad0y pad1x fill-lighten0 code small endpoint-method'>GET</div>
+      <div class='pad0 code small endpoint-url'>http://localhost:17332/explorers</div>
+    </div>
+<h4 id="example-request-29">Example Request</h4>
+<h4 id="example-response-27">Example Response</h4>
+<pre class='hljs'>[
+  {
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Bitcoin Cash"</span>,
+    <span class="hljs-attr">"ticker"</span>: <span class="hljs-string">"BCH"</span>,
+    <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://bch-insight.bitpay.com"</span>
+  },
+  {
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Bitcoin"</span>,
+    <span class="hljs-attr">"ticker"</span>: <span class="hljs-string">"BTC"</span>,
+    <span class="hljs-attr">"url"</span>: <span class="hljs-string">"https://insight.bitpay.com"</span>
+  }
+]</pre>
+</div></div></div></div></div><div class="fixed-top space-left16" data-reactid="139"><div class="events fill-light bottom-shadow pad1 col6 pin-topright  " data-reactid="140"><div class="space-right1 small quiet inline" data-reactid="141">Show examples in:</div><div class="rounded-toggle inline short" data-reactid="142"><a class="strong active" data-reactid="143">cURL</a><a class="strong " data-reactid="144">cli</a><a class="strong " data-reactid="145">Python</a><a class="strong " data-reactid="146">JS</a><a class="strong " data-reactid="147">Java</a><a class="strong " data-reactid="148">ObjC</a><a class="strong " data-reactid="149">Swift</a></div><div class="fr pad0" data-reactid="150"><a title="Display as 1 column" style="cursor:pointer;" class="icon quiet caret-left pad0 fill-darken0 round" data-reactid="151"></a></div></div></div><div class="fill-dark dark bottom-shadow fixed-top pad0 width16" data-reactid="152"><a href="/" class="active space-top1 space-left1 pin-topleft icon round dark pad0 fill-red" data-reactid="153"></a><div class="strong small pad0
+          
+          space-left4 line-height15" data-reactid="154">API Documentation</div></div></div></div><!--STOP-->
+    <script src='bundle.js'></script>
+  </body>
+</html>
