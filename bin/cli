@@ -90,7 +90,7 @@ class CLI
       await this.nodeFunc[cmd].apply(this);
     }
     else {
-      this.argv.unshift();
+      this.argv.unshift(cmd);
       await this.nodeFunc['default'].apply(this);
     }
   };
