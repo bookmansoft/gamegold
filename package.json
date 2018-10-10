@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Game Gold Project",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -67,6 +67,9 @@
     "webpack-dev-server": "^3.1.5"
   },
   "main": "./gamegold.js",
+  "bin": {
+    "gggcmd": "./bin/cli"
+  },
   "scripts": {
     "start": "node bin/node --network=testnet",
     "cli": "node bin/cli --network=testnet"
