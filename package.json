@@ -1,7 +1,7 @@
 {
   "name": "gamegold",
-  "version": "1.0.17",
-  "description": "Game Gold Project",
+  "version": "1.0.18",
+  "description": "Game Gold Core",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
   "homepage": "https://github.com/bookmansoft/gamegold",
