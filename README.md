@@ -20,6 +20,7 @@ git clone https://github.com/bookmansoft/gamegold
 ```bash
 cd gamegold
 npm i
+npm link
 ```
 
 4、运行项目
@@ -29,7 +30,11 @@ npm start
 
 5、新开一个命令窗口，执行一条控制台命令
 ```bash
-npm run cli rpc block.info.byheight 0
+gg help
+```
+
+```bash
+gg block.info.byheight 0
 ```
 
 二、npm安装模式
