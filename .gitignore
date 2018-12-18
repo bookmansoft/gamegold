@@ -65,3 +65,4 @@ typings/
 .gamegold/testnet/hosts
 .gamegold/testnet/debug.log
 package-lock.json
+.gamegold/testnet/hosts.json

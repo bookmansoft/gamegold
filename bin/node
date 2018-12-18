@@ -20,7 +20,7 @@ logger.writeConsole = function(level, module, args) {
 };
 
 function addItem(item, entry) {
-  console.log(item, entry);
+  //console.log(item, entry);
 }
 
 var node = new gamegold.fullnode({
