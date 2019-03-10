@@ -34,8 +34,8 @@ class CLI
       apiKey: this.config.str('api-key'),
       network: this.config.str('network'),
       id: this.config.str('wallet-id', 'primary'),
-      cid: '2c9af1d0-7aa3-11e8-8095-3d21d8a3bdc9', //授权节点编号，用于访问远程钱包时的认证
-      token: '03f6682764acd7e015fe4e8083bdb2b969eae0d6243f810a370b23ad3863c2efcd', //授权节点令牌固定量，用于访问远程钱包时的认证
+      cid:    'xxxxxxxx-game-gold-root-xxxxxxxxxxxx', //授权节点编号，用于访问远程钱包时的认证
+      token:  '02c6754571e0cf8949fb71906a501ba520b8e960c7eb35cb3931e362e5d25d2bc5', //授权节点令牌固定量，用于访问远程钱包时的认证
     });
     //@note 钱包作为插件运行时端口号为17332，作为节点时端口号为17334
 
