@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "1.3.7",
+  "version": "1.5.1",
   "description": "Game Gold Core",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -34,10 +34,12 @@
     "crypto-js": "^3.1.9-1",
     "elliptic": "6.4.0",
     "express": "^4.16.3",
+    "gamegoldtoolkit": "^1.6.0",
     "level-js": "^2.2.4",
     "leveldown": "^4.0.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "n64": "0.0.18",
+    "node-fetch": "^2.3.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
     "uuid": "^3.2.1",
@@ -64,7 +66,7 @@
     "uglifyjs-webpack-plugin": "^1.2.2",
     "webpack": "4.16.3",
     "webpack-cli": "^3.0.5",
-    "webpack-dev-server": "^3.1.5"
+    "webpack-dev-server": "^3.2.1"
   },
   "main": "./gamegold.js",
   "bin": {
