@@ -123,14 +123,6 @@ node.mempool.on('tx', addItem);
   //开启挖矿
   node.rpc.execute({method:'miner.set.admin',params:[false]});
   // endregion
-
-  //#region 建立代理服务
-  gamegold.startproxy({
-    node: node, 
-    pow: process.argv.indexOf('--pow') !== -1,
-    ports: [7333, 17333, 17444, 27333, 27901],
-  });
-  //#endregion
 })().catch(err =>{
   console.error(err.stack);
   process.exit(1);
