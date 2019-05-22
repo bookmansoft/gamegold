@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "1.5.22",
+  "version": "1.5.23",
   "description": "Game Gold Core",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -20,7 +20,7 @@
     "wallet"
   ],
   "engines": {
-    "node": ">=10.4.0"
+    "node": ">=8.4.0"
   },
   "dependencies": {
     "ajv": "6.5.0",
@@ -33,17 +33,14 @@
     "elliptic": "6.4.0",
     "level-js": "2.2.4",
     "leveldown": "4.0.1",
-    "lodash": "4.17.11",
+    "lodash": "4.17.11"
+    ,
     "n64": "0.0.18",
     "request": "2.87.0",
-    "request-promise": "4.2.2",
-    "socket.io": "2.1.1",
-    "uuid": "3.2.1",
-    "uws": "10.148.0"
+    "request-promise": "4.2.2"
   },
   "optionalDependencies": {
-    "secp256k1": "^3.3.0",
-    "socket.io-client": "^2.1.1"
+    "secp256k1": "^3.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
