@@ -60,6 +60,8 @@ typings/
 # next.js build output
 .next
 
+.exe
+
 .gamegold/testnet/chain.ldb/
 .gamegold/testnet/walletdb.ldb/
 .gamegold/testnet/hosts
