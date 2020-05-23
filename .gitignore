@@ -66,5 +66,6 @@ typings/
 .gamegold/testnet/walletdb.ldb/
 .gamegold/testnet/hosts
 .gamegold/testnet/debug.log
-package-lock.json
 .gamegold/testnet/hosts.json
+.gamegold/testnet/contractdb.ldb/
+package-lock.json

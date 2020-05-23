@@ -7,8 +7,66 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "启动程序",
-            "program": "${workspaceFolder}\\bin\\node"
-        }
-    ]
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+            "-u",
+            "tdd",
+            "--timeout",
+            "999999",
+            "--colors",
+            "--recursive",
+            "-t",
+            "600000",
+            "-s",
+            "1000",
+            "${workspaceFolder}/test"
+            ],
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "SPV",
+            "program": "${workspaceFolder}/bin/spvnode",
+            "args": [
+                "--network=testnet"
+            ],
+            "skipFiles": [
+            "${workspaceFolder}/node_modules/**/*.js",
+            "<node_internals>/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "FULLNODE",
+            "program": "${workspaceFolder}/bin/node",
+            "outputCapture": "std",
+            "args": [                
+            "--debug",                
+            "--wallet=bookmansoft,english",                
+            ],
+            "env": {"GAMEGOLD_NETWORK": "testnet"},
+            "skipFiles": [
+            "${workspaceFolder}/node_modules/**/*.js",
+            "<node_internals>/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "CLI generate",
+            "program": "${workspaceFolder}/bin/cli",
+            "args": [
+                "--network=testnet",
+                "miner.generate.admin",
+                "1"
+            ],
+            "skipFiles": [
+            "${workspaceFolder}/node_modules/**/*.js",
+            "<node_internals>/**/*.js"
+            ]
+        },
+        ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "gamegold",
-  "version": "1.6.30",
-  "description": "Game Gold Core",
+  "version": "2.0.0-RC1",
+  "description": "Vallnet Core",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
   "homepage": "https://github.com/bookmansoft/gamegold",
@@ -13,6 +13,7 @@
     "bookmansoft <ceo@920.cc>"
   ],
   "keywords": [
+    "vallnet",
     "gamegold",
     "bitcoin",
     "blockchain",
@@ -20,40 +21,22 @@
     "wallet"
   ],
   "engines": {
-    "node": ">=10.4.0"
+    "node": ">=14.0.0"
   },
   "dependencies": {
-    "cross-env": "5.1.3",
-    "leveldown": "4.0.1"
+    "cross-env": "^5.1.3"
   },
   "optionalDependencies": {
-    "secp256k1": "^3.3.0"
+    "secp256k1": "^3.8.0"
   },
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-es2016": "^6.24.1",
-    "babel-preset-es2017": "^6.24.1",
-    "chai": "4.1.2",
-    "eslint": "^4.19.1",
-    "hash.js": "^1.1.3",
-    "jsdoc": "^3.6.2",
-    "mocha": "^5.2.0",
-    "node-loader": "^0.6.0",
-    "uglifyjs-webpack-plugin": "^1.2.2",
-    "webpack": "4.16.3",
-    "webpack-cli": "^3.0.5",
-    "webpack-dev-server": "^3.2.1"
-  },
-  "main": "./gamegold.js",
+  "devDependencies": {},
+  "main": "./lib/gamegold.js",
   "bin": {
-    "gg": "./bin/cli"
+    "vc": "./bin/cli",
+    "vn": "./bin/node"
   },
   "scripts": {
-    "start": "node bin/node --network=testnet",
-    "cli": "node bin/cli --network=testnet"
+    "start": "cross-env GAMEGOLD_NETWORK=testnet node bin/node --phrase=bookmansoft --word=\"遭 裕 御 为 往 看 验 剩 九 煮 胡 沉\" --wallet=bookmansoft,english",
+    "cli": "cross-env GAMEGOLD_NETWORK=testnet node bin/cli"
   }
 }
