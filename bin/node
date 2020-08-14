@@ -4,14 +4,32 @@
 const path = require('path');
 
 process.title = 'gamegold';
+// Uncaught exception handler
+process.on('unhandledRejection', (err, promise) => {
+  console.error(err);
+});
+process.on('uncaughtException', (err) => {
+  console.error(` Caught exceptio n: ${err.stack}`);
+});
+
+if (process.argv.indexOf('--help') !== -1 || process.argv.indexOf('-h') !== -1) {
+  console.error('See the wiki at: https://gitee.com/bookmanSoftware/ggserver/wiki.');
+  process.exit(1);
+  throw new Error('Could not exit.');
+}
+
+if (process.argv.indexOf('--version') !== -1 || process.argv.indexOf('-v') !== -1) {
+  const pkg = require('../package.json');
+  console.log(pkg.version);
+  process.exit(0);
+  throw new Error('Could not exit.');
+}
 
 const gamegold = require('../lib/gamegold');
 // 由于本示例项目是从 lib 目录下引用 gamegold，而不像普通项目将 gamegold 和其他依赖包一同安装于 node_modules 之下
 // 因此需要做一下地址转换，避免部分使用绝对地址的二进制包无法引用
 gamegold.setRelative(path.join(__dirname, '../', 'node_modules'));
 const FullNode = gamegold.fullnode;
-const MnemonicHelper = gamegold.hd.MnemonicHelper;
-const consensus = gamegold.consensus;
 const Account = gamegold.wallet.Account;
 const MTX = gamegold.mtx;
 
@@ -27,15 +45,16 @@ const node = new FullNode({
   workers: false,
   listen: true,
   loader: require,
-  plugins: [ 
+  plugins: [ // 2018.5.3 当前版本要求：钱包插件最后载入
     gamegold.stratum,           //矿场管理插件，只能在全节点加载
     gamegold.contractPlugin,    //合约账户管理插件，可以在全节点加载
     gamegold.wallet.plugin,     //钱包管理插件，可以在全节点或SPV节点加载
   ],
-});
-
-process.on('unhandledRejection', (err, promise) => {
-  console.error(err);
+  mnemonic: {
+    passphrase: 'bookmansoft',
+    language: 'english',
+    bits: 256,
+  },
 });
 
 (async () => {
@@ -48,54 +67,29 @@ process.on('unhandledRejection', (err, promise) => {
   //#region 启动全节点程序
 
   await node.ensure();
+  await node.open();
 
-  //本地钱包创建参数
-  let mcfg = {};
+  const cdb = node.require('contractdb');
+  if (cdb) {
+    cdb.on('prop/receive', msg => {
+      //console.log('prop/receive:', msg);
+    });
 
-  let needSaveWallet = false;
-  //测试钱包数据库是否已经建立
+    cdb.on('prop/auction', msg => {
+      //console.log('prop/auction:', msg);
+    });
+
+    cdb.on('cp/orderPay', msg => {
+      //console.log('cp/orderPay:', msg);
+    });
+
+    cdb.on('balance.client', msg => {
+      //console.log('balance.client', msg);
+    });
+  }
+
   const wdb = node.require('walletdb');
   if (wdb) {
-    if (await wdb.isNewRecord()) {
-      // 当前尚未建立钱包数据库，引导用户进入创建钱包流程，补充输入必要的前导信息，例如 passphrase
-      console.log('new wallet db to be created.');
-
-      let wparams = node.config.args['wallet'].split(',');
-      mcfg.passphrase = wparams[0] || 'bookmansoft',
-      mcfg.language = wparams[1] || 'english';
-      mcfg.bits = parseInt(wparams[2]) || 256;
-
-      let opts = await MnemonicHelper.readFromFile({
-        file: `./wallet-${node.config.network}.encrypt`,
-        passphrase: mcfg.passphrase,
-        bits: mcfg.bits,
-        network: node.config.network,
-      });
-
-      if(!!opts.phrase) {
-        const rt = wdb.testmnemonic(opts.phrase); // rt的结构 {code: Number, msg: String}
-        if (rt.code == 0) {
-          wdb.setmnemonicByWords(opts.phrase);
-          // 钱包的语言版本，注意该设定只是决定了 primary 的语言版本，后续创建的钱包还得单独设定
-          wdb.setlanguage(opts.language);
-
-          // 衍生盐 & 加解密密码
-          wdb.setpassphrase(mcfg.passphrase);
-        } else {
-          // 提示助记符错误
-          // @note：为了维护良好的用户体验，需要提示具体的错误原因，例如长度不足等等
-          throw rt.msg;
-        }
-      } else {
-          // 指定熵的长度（位），内部自动生成助记符
-          wdb.setmnemonic(mcfg);
-          needSaveWallet = true;
-      }
-    } else {
-      // 当前已经建立了钱包数据库，可以做一些进一步的判断，例如钱包是否已备份等
-      console.log('wallet db exists.');
-    }
-
     wdb.on('prop/receive', msg => {
       //console.log('prop/receive:', msg);
     });
@@ -106,10 +100,6 @@ process.on('unhandledRejection', (err, promise) => {
 
     wdb.on('cp/orderPay', msg => {
       //console.log('cp/orderPay:', msg);
-    });
-
-    wdb.on('balance.account.client', msg => {
-      //console.log('balance.account.client', msg);
     });
 
     wdb.on('balance.client', msg => {
@@ -200,84 +190,9 @@ process.on('unhandledRejection', (err, promise) => {
       }
     });
     //#endregion
-  } else {
-    // 当前节点不具备钱包插件
   }
 
-  // 测试合约数据库是否已经建立
-  const cdb = node.require('contractdb');
-  if (cdb) {
-    if (await cdb.isNewRecord()) {
-      console.log('new contract db to be created.');
-
-      cdb.setmnemonicByWords(consensus.SmartContractMnemonic.phrase);
-      cdb.setlanguage(consensus.SmartContractMnemonic.language);
-      cdb.setpassphrase(consensus.SmartContractMnemonic.passphrase);
-    } else {
-      console.log('contract db exists.');
-    }
-
-    cdb.on('prop/receive', msg => {
-      //console.log('prop/receive:', msg);
-    });
-
-    cdb.on('prop/auction', msg => {
-      //console.log('prop/auction:', msg);
-    });
-
-    cdb.on('cp/orderPay', msg => {
-      //console.log('cp/orderPay:', msg);
-    });
-
-    cdb.on('balance.account.client', msg => {
-      //console.log('balance.account.client', msg);
-    });
-
-    cdb.on('balance.client', msg => {
-      //console.log('balance.client', msg);
-    });
-  } else {
-    // 当前节点不具备钱包插件
-  }
-
-  // 引擎启动时，如果【链库未创建或已删除】，则进行如下判断：
-  // 1. 如果默认启动，则使用默认参数创建统一的创世区块，该节点将和所有默认启动的节点共享默认块链。
-  // 2. 如果指定了 --genesis 参数，则认为是新的创世流程，将构造创世参数以创建新的创世区块。该节点将创建一条新的块链
-  let opts = null;
-  if (!!node.config.args['genesis']) {
-    let params = node.config.args['genesis'].split(',');
-    //检测是否存在创世文件，如存在则利用它重构创世参数
-    opts = await MnemonicHelper.readFromFile({
-      //待创建的创世密钥加密文件的名称
-      file: `./genesis-${node.config.network}.encrypt`,
-      //创世密钥加密密钥兼盐
-      passphrase: params[0] || 'bookmansoft',
-      // 助记词语言选择 "simplified chinese", "traditional chinese", english, french, italian, japanese, spanish'
-      language: params[1] || 'english',
-      //创世密钥长度
-      bits: parseInt(params[1]) || 256,
-      network: node.config.network,
-    });
-  }
-
-  await node.open(opts);
   await node.connect();
-
-  //对新的钱包库，加密保存其根密钥
-  if(needSaveWallet) {
-    let prim = await wdb.get('primary');
-    let $key = prim.master.toJSON(true);
-    await MnemonicHelper.writeToFile({
-      body: {
-        phrase: $key.mnemonic.phrase,
-        language: $key.mnemonic.language,
-      },
-      passphrase: mcfg.passphrase,
-      file: `wallet-${node.config.network}.encrypt`,
-      network: node.config.network,
-    });
-  }
-
   node.startSync();
   
   //通过传入 true/false 开启/关闭挖矿

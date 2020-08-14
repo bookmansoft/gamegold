@@ -62,10 +62,8 @@ typings/
 
 .exe
 
-.gamegold/testnet/chain.ldb/
-.gamegold/testnet/walletdb.ldb/
-.gamegold/testnet/hosts
-.gamegold/testnet/debug.log
-.gamegold/testnet/hosts.json
-.gamegold/testnet/contractdb.ldb/
+.gamegold/main/
+.gamegold/testnet/
 package-lock.json
+testnet-genesis.encrypt
+main-genesis.encrypt

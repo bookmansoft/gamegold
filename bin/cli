@@ -25,7 +25,11 @@ gamegold.setRelative(path.join(__dirname, '../', 'node_modules'));
 const DefaultNetworktype = 'testnet';
 const DefaultCid = gamegold.consensus.ROOT;
 /**
- * 控制台应用，同时也也作为RPC客户端使用
+ * 控制台行命令工具
+ * @note 可以在键入行命令时引入环境变量, 例如:
+ *  'gg block.tips --network=testnet --spv=true'
+ *  - 环境变量'--spv=true'可以简写为'--spv'
+ *  - 指定 network 变量后，cli自动从配置文件中读取对应端口设置并连接节点
  */
 class CLI
 {
@@ -33,7 +37,7 @@ class CLI
    * 构造函数
    */
   constructor() {
-    this.config = new Config('gamegold');
+    this.config = new Config({module: 'gamegold'});
     this.config.load({
       argv: true,
       env: true
@@ -119,30 +123,36 @@ class CLI
     if(this.args['network']) {
         network = this.args['network'];
     }
-
+    let rpcRemotePort = null;
+    if(this.args['port']) {
+      rpcRemotePort = this.args['port'];
+    }
     this.config.network = network;
     this.config.options['network'] = network;
     this.config.env['GAMEGOLD_NETWORK'] = network;
-    this.config.open('gamegold.conf');
+    this.config.spv = false;
+    if(this.args['spv']) {
+      this.config.spv = true;
+    }
+    this.config.open();
 
     let priv = HDPrivateKey.fromKey(Buffer.from(encoding.ONE_HASH, 'hex'), Buffer.from(encoding.DefaultChainCode, 'hex'), network);
     let {token} = priv.getHMAC(util.hashInt(DefaultCid));
 
-    //通讯客户端组件，用于访问远程服务器
-    this.accessWallet = new accessWallet({
-      rpcHost: this.config.str('http-remote-host'),
+    let params = {
+      rpcHost: this.config.str('http-remote-host'), //RPC服务主机地址
+      rpcRemotePort: rpcRemotePort,
+      spv: this.config.spv,
       apiKey: this.config.str('api-key'),
       network: this.config.str('network'),
       id: this.config.str('wallet-id', 'primary'),
-      //Root模式，根据上行参数，以限定子账户/非限定模式进行访问
+      //分为非限定模式(cid=consensus.ROOT)和限定模式(限定访问cid对应的子账户)
       cid: DefaultCid,  //授权节点编号，用于访问远程钱包时的认证
       token: token,     //授权节点令牌固定量，用于访问远程钱包时的认证
-      //授权终端模式，限定访问cid对应的子账户
-      //cid: 'ter001',
-      //token: '',
-      //End
-    });
-    //@note 钱包作为插件运行时端口号为17332，作为节点时端口号为17334
+    };
+    //通讯客户端组件，用于访问远程服务器
+    this.accessWallet = new accessWallet(params);
+    //@note 钱包作为插件运行和作为节点时端口号并不一样，有一个偏移调整
 
     if(this.args['wid']) {
         this.accessWallet.client.id = this.args['wid'];

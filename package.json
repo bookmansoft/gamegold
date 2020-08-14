@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "2.0.0-RC4",
+  "version": "2.0.2",
   "description": "Vallnet Core",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -24,7 +24,7 @@
     "node": "12.6.3"
   },
   "dependencies": {
-    "cross-env": "^5.1.3"
+    "cross-env": "^5.2.1"
   },
   "optionalDependencies": {
     "secp256k1": "^3.8.0"
@@ -36,7 +36,7 @@
     "vn": "./bin/node"
   },
   "scripts": {
-    "start": "cross-env GAMEGOLD_NETWORK=testnet node bin/node --phrase=bookmansoft --word=\"遭 裕 御 为 往 看 验 剩 九 煮 胡 沉\" --wallet=bookmansoft,english",
-    "cli": "cross-env GAMEGOLD_NETWORK=testnet node bin/cli"
+    "start": "node bin/node --genesis --network=testnet --phrase=bookmansoft",
+    "cli": "node bin/cli"
   }
 }
