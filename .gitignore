@@ -65,5 +65,5 @@ typings/
 .gamegold/main/
 .gamegold/testnet/
 package-lock.json
-testnet-genesis.encrypt
-main-genesis.encrypt
+.encrypt
+.keystore
