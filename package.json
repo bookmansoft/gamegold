@@ -33,6 +33,7 @@
   },
   "scripts": {
     "start": "node bin/node --genesis --network=testnet --phrase=bookmansoft",
-    "cli": "node bin/cli"
+    "cli": "node bin/cli",
+    "postinstall": "node scripts/install.js"
   }
 }
