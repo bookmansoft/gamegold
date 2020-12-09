@@ -4,7 +4,7 @@ const fs = require('fs');
 async function replaceLevelDown() {
     let platform = os.platform();
     let arch =  os.arch();   
-    let nodeFolder= `${__dirname}/../lib/build/release`;    
+    let nodeFolder= `${__dirname}/../lib/build/Release`;    
     let targetFile = nodeFolder + "/leveldown.node"
     try {
         let levelFolder = `${__dirname}/../lib/level_prebuilds`;
