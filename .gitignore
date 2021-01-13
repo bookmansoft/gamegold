@@ -60,10 +60,11 @@ typings/
 # next.js build output
 .next
 
-.exe
-
 .gamegold/main/
 .gamegold/testnet/
 package-lock.json
-.encrypt
-.keystore
+
+*.exe
+*.encrypt
+*.keystore
+*.params
