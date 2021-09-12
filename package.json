@@ -1,6 +1,6 @@
 {
   "name": "gamegold",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Vallnet Core",
   "license": "MIT",
   "repository": "git://github.com/bookmansoft/gamegold",
@@ -21,7 +21,7 @@
     "wallet"
   ],
   "engines": {
-    "node": "14.15.4"
+    "node": ">=14.15.4"
   },
   "dependencies": {},
   "optionalDependencies": {},
